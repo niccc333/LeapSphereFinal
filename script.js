@@ -160,10 +160,10 @@
       x: Math.random() * w,
       y: Math.random() * h,
       radius: layer === 0
-        ? Math.random() * 1.2 + 0.4
+        ? Math.random() * 1.5 + 0.5
         : layer === 1
-          ? Math.random() * 1.8 + 0.8
-          : Math.random() * 2.5 + 1.2,
+          ? Math.random() * 2.25 + 1.0
+          : Math.random() * 3.125 + 1.5,
       color: colors[Math.floor(Math.random() * colors.length)],
       alpha: layer === 0
         ? Math.random() * 0.22 + 0.05
@@ -227,7 +227,7 @@
         var dy = (particles[i].y - piOff) - (particles[j].y - pjOff);
         var dist = Math.sqrt(dx * dx + dy * dy);
         if (dist < connectionRadius) {
-          var lineAlpha = (1 - dist / connectionRadius) * 0.15;
+          var lineAlpha = (1 - dist / connectionRadius) * 0.20;
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y - piOff);
           ctx.lineTo(particles[j].x, particles[j].y - pjOff);
