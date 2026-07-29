@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work In Progress — LeapSphere</title>
+  <meta name="description" content="This page is currently a work in progress." />
+  <link rel="icon" type="image/svg+xml" href="assets/logo-icon-dark.svg?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body { background: var(--porcelain-2); }
+    .wip-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px clamp(24px, 6vw, 120px);
+    }
+    .wip-title {
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 400;
+      letter-spacing: -.02em;
+      color: var(--dark);
+      margin-bottom: 24px;
+    }
+    .wip-sub {
+      font-size: clamp(16px, 1.4vw, 18px);
+      color: var(--olive);
+      margin-bottom: 40px;
+    }
+    .wip-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      color: var(--olive);
+      opacity: .8;
+      transition: opacity .3s ease, color .3s ease;
+    }
+    .wip-back:hover { opacity: 1; color: var(--dark); }
+    .wip-back svg { width: 16px; height: 16px; }
+  </style>
+</head>
+
+<body>
+  <header class="nav" id="nav">
+    <a href="index.html" class="nav__logo" aria-label="LeapSphere home">
+      <div style="position: relative; display: flex;">
+        <img src="new%20brand%20assets/LeapSphere%20Logo%20Dark.svg" alt="LeapSphere" class="nav__icon nav__icon--dark" />
+        <img src="new%20brand%20assets/LeapSphere%20Logo%20White.svg" alt="LeapSphere" class="nav__icon nav__icon--light" style="left: 0; top: 0;" />
+      </div>
+    </a>
+    <div class="nav__right">
+      <a href="#" class="btn btn--accent nav__cta is-shown js-modal-btn">Partner with LeapSphere</a>
+      <button class="nav__lang" type="button">fr</button>
+      <button class="nav__menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <!-- Dropdown menu overlay -->
+    <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+      <nav class="menu-overlay__links">
+        <a href="index.html" class="menu-link">Home</a>
+        <a href="wip.html" class="menu-link">About Us</a>
+        <a href="features.html" class="menu-link">Features</a>
+        <a href="wip.html" class="menu-link">Whitepapers</a>
+        <a href="wip.html" class="menu-link">FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="wip-page">
+      <h1 class="wip-title">Work In Progress</h1>
+      <p class="wip-sub">We're currently building this page. Check back soon!</p>
+      <a href="index.html" class="wip-back">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 12L6 8l4-4"/>
+        </svg>
+        Back to Home
+      </a>
+    </section>
+  </main>
+
+  <!-- ============================== POPUP MODAL ============================== -->
+  <div class="popup-modal" id="contactModal" aria-hidden="true">
+    <div class="popup-modal__overlay" id="contactModalOverlay"></div>
+    <div class="popup-modal__content">
+      <button class="popup-modal__close" id="contactModalClose" aria-label="Close modal">&times;</button>
+      <form class="popup-modal__form" action="https://formspree.io/f/mwvgwakp" method="POST">
+        <h3 class="popup-modal__title">Partner with LeapSphere</h3>
+        <input type="email" name="email" class="popup-modal__input" placeholder="enter your email" aria-label="Email address" required />
+        <button type="submit" class="btn btn--accent popup-modal__submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const nav = document.getElementById("nav");
+    const menuBtn = document.getElementById("menuBtn");
+    const menuOverlay = document.getElementById("menuOverlay");
+    function openMenu() {
+      nav.classList.add("is-open");
+      menuOverlay.classList.add("is-open");
+      menuOverlay.setAttribute("aria-hidden", "false");
+      menuBtn.setAttribute("aria-expanded", "true");
+    }
+    function closeMenu() {
+      nav.classList.remove("is-open");
+      menuOverlay.classList.remove("is-open");
+      menuOverlay.setAttribute("aria-hidden", "true");
+      menuBtn.setAttribute("aria-expanded", "false");
+    }
+    if (menuBtn && menuOverlay && nav) {
+      menuBtn.addEventListener("click", () => {
+        nav.classList.contains("is-open") ? closeMenu() : openMenu();
+      });
+      document.addEventListener("keydown", (e) => e.key === "Escape" && closeMenu());
+    }
+
+    const contactModal = document.getElementById("contactModal");
+    const contactModalOverlay = document.getElementById("contactModalOverlay");
+    const contactModalClose = document.getElementById("contactModalClose");
+    const modalBtns = document.querySelectorAll(".js-modal-btn");
+
+    function openModal(e) {
+      if (e) e.preventDefault();
+      contactModal.classList.add("is-open");
+      contactModal.setAttribute("aria-hidden", "false");
+    }
+    function closeModal() {
+      contactModal.classList.remove("is-open");
+      contactModal.setAttribute("aria-hidden", "true");
+    }
+
+    if (contactModal) {
+      modalBtns.forEach(btn => btn.addEventListener("click", openModal));
+      contactModalClose.addEventListener("click", closeModal);
+      contactModalOverlay.addEventListener("click", closeModal);
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && contactModal.classList.contains("is-open")) {
+          closeModal();
+        }
+      });
+    }
+
+    const I18N = [
+      { sel: ".nav__cta", fr: "S'associer à LeapSphere" },
+      { sel: ".menu-link:nth-child(1)", fr: "Accueil" },
+      { sel: ".menu-link:nth-child(2)", fr: "À propos" },
+      { sel: ".menu-link:nth-child(3)", fr: "Fonctionnalités" },
+      { sel: ".menu-link:nth-child(4)", fr: "Livres blancs" },
+      { sel: ".menu-link:nth-child(5)", fr: "FAQ" },
+      { sel: ".wip-title", fr: "Travail en cours" },
+      { sel: ".wip-sub", fr: "Nous construisons actuellement cette page. Revenez bientôt !" },
+      { sel: ".wip-back", fr: "<svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M10 12L6 8l4-4\"/></svg> Retour à l'accueil" },
+      { sel: ".popup-modal__title", fr: "S'associer à LeapSphere" },
+      { sel: ".popup-modal__submit", fr: "Envoyer" }
+    ];
+
+    let currentLang = localStorage.getItem("ls-lang") === "fr" ? "fr" : "en";
+
+    function initI18n() {
+      I18N.forEach((entry) => {
+        const el = document.querySelector(entry.sel);
+        if (el) entry._en = el.innerHTML;
+      });
+      const emailModal = document.querySelector(".popup-modal__input");
+      if (emailModal) emailModal.dataset.enPlaceholder = emailModal.getAttribute("placeholder") || "";
+      const langBtn = document.querySelector(".nav__lang");
+      if (langBtn) {
+        langBtn.addEventListener("click", () => applyLang(currentLang === "fr" ? "en" : "fr"));
+      }
+    }
+
+    function applyLang(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      I18N.forEach((entry) => {
+        const el = document.querySelector(entry.sel);
+        if (el && entry[lang === "fr" ? "fr" : "_en"]) {
+          el.innerHTML = lang === "fr" ? entry.fr : entry._en;
+        }
+      });
+      const emailModal = document.querySelector(".popup-modal__input");
+      if (emailModal) {
+        emailModal.placeholder = lang === "fr" ? "entrez votre e-mail" : emailModal.dataset.enPlaceholder || "";
+      }
+      const langBtn = document.querySelector(".nav__lang");
+      if (langBtn) langBtn.textContent = lang === "fr" ? "en" : "fr";
+      localStorage.setItem("ls-lang", lang);
+    }
+
+    initI18n();
+    applyLang(currentLang);
+  </script>
+</body>
+</html>

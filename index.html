@@ -2,493 +2,353 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LeapSphere — Unlock Smarter Content</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LeapSphere — Be the name people think of first</title>
   <meta name="description"
-    content="LeapSphere delivers a complete, autonomously optimized content marketing system so you can focus on your business.">
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="LeapSphere — Unlock Smarter Content">
-  <meta property="og:description"
-    content="We deliver a complete, autonomously optimized content marketing system, so you can focus on your business.">
-  <meta property="og:url" content="https://leapsphere.ai/">
-
-  <!-- Favicon for Browser Tabs -->
-  <link rel="icon" type="image/svg+xml" sizes="any" href="Public/LeapSphereLogo.svg">
-  <link rel="icon" type="image/png" sizes="32x32" href="Public/Component9.png">
-
-  <!-- Favicon for Google Search -->
-  <link rel="icon" type="image/png" sizes="48x48" href="Public/Component9.png">
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-    rel="stylesheet">
-
-  <link rel="stylesheet" href="styles.css">
+    content="LeapSphere handles your marketing from strategy to publishing, so you stay focused on running your business." />
+  <link rel="icon" type="image/svg+xml" href="assets/logo-icon-dark.svg?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body>
 
-  <!-- Vignette overlay -->
-  <div class="vignette" aria-hidden="true"></div>
-
-  <!-- ═══════════ NAVBAR ═══════════ -->
-  <nav class="navbar" id="navbar">
-    <div class="nav-inner">
-      <a href="#" class="nav-logo">
-        <span class="logo-text">LeapSphere</span>
-        <img src="Public/Group 130.png" alt="LeapSphere Logo" class="logo-img">
-      </a>
-
-
-      <div class="nav-links" id="navLinks">
-        <a href="#features" class="nav-link" data-en="Features" data-fr="Fonctionnalités">Features</a>
-        <a href="#workflow" class="nav-link" data-en="Workflow" data-fr="Flux de travail">Workflow</a>
-        <a href="#cta-final" class="nav-link" data-en="Get Started" data-fr="Commencer">Get Started</a>
-        <a href="#footer" class="nav-link" data-en="Contact" data-fr="Contact">Contact</a>
+  <!-- ============================== NAVBAR ============================== -->
+  <header class="nav" id="nav" data-fade>
+    <a href="#top" class="nav__logo" aria-label="LeapSphere home">
+      <div style="position: relative; display: flex;">
+        <img src="new%20brand%20assets/LeapSphere%20Logo%20Dark.svg" alt="LeapSphere"
+          class="nav__icon nav__icon--dark" />
+        <img src="new%20brand%20assets/LeapSphere%20Logo%20White.svg" alt="LeapSphere"
+          class="nav__icon nav__icon--light" style="left: 0; top: 0;" />
       </div>
+    </a>
 
-      <div class="nav-actions">
-        <button class="lang-toggle" id="langToggle" aria-label="Switch language">
-          <span class="lang-toggle-label" data-en="FR" data-fr="EN">FR</span>
-        </button>
-        <a href="#cta-final" class="btn btn-primary btn-nav" data-en="Get Early Access" data-fr="Accès anticipé">Get
-          Early Access</a>
-        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
+    <div class="nav__right">
+      <a href="#" class="btn btn--accent nav__cta js-modal-btn" id="navCta">Partner with LeapSphere</a>
+      <button class="nav__lang" type="button">fr</button>
+      <button class="nav__menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-  </nav>
+    <!-- Dropdown menu overlay -->
+    <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+      <nav class="menu-overlay__links">
+        <a href="#top" class="menu-link">Home</a>
+        <a href="wip.html" class="menu-link">About Us</a>
+        <a href="features.html" class="menu-link">Features</a>
+        <a href="wip.html" class="menu-link">Whitepapers</a>
+        <a href="wip.html" class="menu-link">FAQ</a>
+      </nav>
+    </div>
+  </header>
 
-  <div class="particles-wrapper">
-    <canvas id="particleCanvas" aria-hidden="true"></canvas>
-    <!-- ═══════════ HERO ═══════════ -->
+  <main id="top">
+
+    <!-- ===================== HERO (light -> dark morph) ===================== -->
     <section class="hero" id="hero">
+      <div class="hero__pin">
 
-      <div class="hero-content" data-reveal>
-        <h1 class="hero-title">
-          <span data-en="Unlock Smarter Content." data-fr="Libérez un contenu plus intelligent.">Unlock Smarter
-            Content.</span>
-          <br>
-          <span class="hero-title-accent" data-en="Effortlessly." data-fr="Sans effort.">Effortlessly.</span>
-        </h1>
-        <p class="hero-subtitle"
-          data-en="We deliver a complete, autonomously optimized content marketing system, so you can focus on your business."
-          data-fr="Nous offrons un système de marketing de contenu complet et optimisé de manière autonome, pour que vous puissiez vous concentrer sur votre entreprise.">
-          We deliver a complete, autonomously optimized content marketing system, so you can focus on your business.</p>
-
-        <form class="hero-form" action="https://formspree.io/f/xnngnvdz" method="POST" id="heroForm">
-          <div class="form-group">
-            <input type="email" name="email" required placeholder="Enter your email" class="form-input"
-              data-en-placeholder="Enter your email" data-fr-placeholder="Entrez votre courriel">
-            <button type="submit" class="btn btn-primary" data-en="Get Early Access" data-fr="Accès anticipé">Get Early
-              Access</button>
+        <!-- LIGHT layer -->
+        <div class="hero__layer hero__layer--light" data-hero="light">
+          <div class="hero__inner">
+            <h1 class="hero__title" id="heroTitle" aria-label="Be the name people think of first"></h1>
+            <p class="hero__sub" data-fade>Stop wasting hours on marketing that goes nowhere. We handle your
+              content, from strategy to publishing. You stay focused on running your business.</p>
+            <a href="#" class="btn btn--accent hero__btn js-modal-btn" data-fade>Partner with LeapSphere</a>
           </div>
-        </form>
-      </div>
-
-      <div class="scroll-indicator" aria-hidden="true">
-        <div class="scroll-dot"></div>
-      </div>
-    </section>
-
-    <!-- ═══════════ FEATURES ═══════════ -->
-    <section class="features" id="features">
-      <div class="container">
-        <div class="features-grid">
-
-          <div class="feature-card" data-reveal>
-            <div class="feature-icon">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="url(#grad1)" stroke-width="1.5"
-                stroke-linecap="round" stroke-linejoin="round">
-                <defs>
-                  <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color:#8374F1" />
-                    <stop offset="100%" style="stop-color:#76D4EB" />
-                  </linearGradient>
-                </defs>
-                <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                <path d="M2 17l10 5 10-5" />
-                <path d="M2 12l10 5 10-5" />
-              </svg>
-            </div>
-            <h3 class="feature-title" data-en="Build a Brand That Connects" data-fr="Créez une marque qui connecte">
-              Build
-              a Brand That Connects</h3>
-            <p class="feature-desc"
-              data-en="Eliminate brand inconsistency. Our AI crafts your strategy and voice, making every piece impactful."
-              data-fr="Éliminez l'incohérence de marque. Notre IA élabore votre stratégie et votre voix, rendant chaque contenu percutant.">
-              Eliminate brand inconsistency. Our AI crafts your strategy and voice, making every piece impactful.</p>
-          </div>
-
-          <div class="feature-card" data-reveal>
-            <div class="feature-icon">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="url(#grad2)" stroke-width="1.5"
-                stroke-linecap="round" stroke-linejoin="round">
-                <defs>
-                  <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color:#8374F1" />
-                    <stop offset="100%" style="stop-color:#76D4EB" />
-                  </linearGradient>
-                </defs>
-                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-              </svg>
-            </div>
-            <h3 class="feature-title" data-en="Generate Content That Ranks" data-fr="Générez du contenu qui se classe">
-              Generate Content That Ranks</h3>
-            <p class="feature-desc"
-              data-en="Generate high-quality, on-brand content tailored to your industry and designed to build awareness & SEO."
-              data-fr="Générez du contenu de haute qualité, fidèle à votre marque, adapté à votre industrie et conçu pour développer la notoriété et le SEO.">
-              Generate high-quality, on-brand content tailored to your industry and designed to build awareness & SEO.
-            </p>
-          </div>
-
-          <div class="feature-card" data-reveal>
-            <div class="feature-icon">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="url(#grad3)" stroke-width="1.5"
-                stroke-linecap="round" stroke-linejoin="round">
-                <defs>
-                  <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color:#8374F1" />
-                    <stop offset="100%" style="stop-color:#76D4EB" />
-                  </linearGradient>
-                </defs>
-                <path d="M22 2L11 13" />
-                <path d="M22 2l-7 20-4-9-9-4 20-7z" />
-              </svg>
-            </div>
-            <h3 class="feature-title" data-en="Amplify Your Reach" data-fr="Amplifiez votre portée">Amplify Your Reach
-            </h3>
-            <p class="feature-desc"
-              data-en="Post across platforms effortlessly while our AI continuously refines your strategy for better performance."
-              data-fr="Publiez sur toutes les plateformes sans effort pendant que notre IA affine continuellement votre stratégie pour de meilleures performances.">
-              Post across platforms effortlessly while our AI continuously refines your strategy for better performance.
-            </p>
-          </div>
-
+          <div class="scroll-mouse" data-fade></div>
         </div>
-    </section>
-    <!-- ═══════════ SAVE TIME ═══════════ -->
-    <section class="save-time" id="save-time">
-      <div class="container">
-        <div class="save-time-inner" data-reveal>
-          <div class="save-time-text">
-            <h2 class="section-title">
-              <span data-en="Save time." data-fr="Gagnez du temps.">Save time.</span><br>
-              <span class="accent" data-en="Save money." data-fr="Économisez de l'argent.">Save money.</span>
-            </h2>
-            <p class="save-time-desc"
-              data-en="Skip the pricey agencies and tools. LeapSphere is the marketing expert that handles it all—strategy, creation, and optimization—at a fraction of the cost."
-              data-fr="Évitez les agences et outils coûteux. LeapSphere est l'expert marketing qui gère tout — stratégie, création et optimisation — à une fraction du coût.">
-              Skip the pricey agencies and tools. LeapSphere is the marketing expert that handles it all—strategy,
-              creation, and optimization—at a fraction of the cost.</p>
-            <a href="#cta-final" class="btn btn-primary" data-en="Get Early Access" data-fr="Accès anticipé">Get Early
-              Access</a>
+
+        <!-- DARK layer -->
+        <div class="hero__layer hero__layer--dark" data-hero="dark" aria-hidden="true">
+          <div class="hero__inner hero__inner--dark">
+            <div class="hero__col">
+              <h2 class="hero__title hero__title--dark">Great products &amp; services deserve to be seen</h2>
+              <p class="hero__sub hero__sub--dark">Let LeapSphere take care of your marketing stack.<br />Yes, the whole
+                thing.</p>
+              <div class="hero__actions">
+                <a href="#comparison" class="btn btn--ghost">see use cases</a>
+                <a href="features.html" class="btn btn--ghost btn--ghost-accent">see features</a>
+              </div>
+            </div>
+            <div class="hero__care">
+              <p class="hero__care-label">We take care of:</p>
+              <ul class="hero__care-list">
+                <li>SEO management</li>
+                <li>Blog &amp; article writing</li>
+                <li>Social media management</li>
+                <li>Lead magnets</li>
+                <li>Full Stack CRM</li>
+                <li>Competitor intelligence</li>
+                <li>Reporting &amp; analytics</li>
+              </ul>
+            </div>
           </div>
-          <div class="save-time-visual" aria-hidden="true">
-            <img src="Public/Group 130.png" alt="LeapSphere Symbol" class="logovisual">
-          </div>
+          <div class="hero__glow"></div>
         </div>
       </div>
     </section>
-  </div>
 
-  <!-- ═══════════ WORKFLOW ═══════════ -->
-  <section class="workflow" id="workflow">
-    <div class="container">
-      <h2 class="section-title center" data-reveal>
-        <span data-en="The Autonomous Content Workflow" data-fr="Le flux de contenu autonome">The Autonomous Content
-          Workflow</span>
+    <!-- ===================== HORIZONTAL SCROLL ===================== -->
+    <section class="horizontal" id="horizontal" data-theme="dark">
+      <div class="horizontal__track" id="hTrack">
+        <div class="h-panel h-panel--intro">
+          <h2 class="h-panel__heading">You took the leap to focus on your expertise</h2>
+          <p class="h-panel__lead">You are excellent at what you do.<br />Your clients need your attention.</p>
+          <p class="h-panel__lead">But right now, you are spending unpaid hours trying to stay
+            visible online, and it is pulling you away from your real work.</p>
+        </div>
+
+        <div class="h-cards-wrapper">
+          <article class="h-card card-hover">
+            <h3 class="h-card__title">The Time Drain</h3>
+            <span class="h-card__rule"></span>
+            <p class="h-card__body">You spend evening hours staring at a blank screen, writing posts, and managing
+              platforms when you should be resting or serving clients.</p>
+          </article>
+
+          <article class="h-card card-hover">
+            <h3 class="h-card__title">The Silence</h3>
+            <span class="h-card__rule"></span>
+            <p class="h-card__body">You put real effort into posting, but nothing happens. Visibility stays low because
+              random, scattered posts do not build steady authority.</p>
+          </article>
+
+          <article class="h-card card-hover">
+            <h3 class="h-card__title">The Agency Bill</h3>
+            <span class="h-card__rule"></span>
+            <p class="h-card__body">You pay high monthly retainers for agencies that move slowly, require endless
+              meetings, and still sound like someone else wrote your copy.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== VISIBILITY (bright) ===================== -->
+    <section class="visibility" id="visibility" data-theme="light">
+      <div class="visibility__glow"></div>
+      <h2 class="visibility__title" data-reveal>
+        <span>More visibility.</span>
+        <span>Less cost.</span>
+        <span>Zero time wasted.</span>
       </h2>
-      <p class="section-subtitle center"
-        data-en="Our AI takes care of everything, from strategy to scheduling, and brings you in for one simple step: your final approval."
-        data-fr="Notre IA s'occupe de tout, de la stratégie à la planification, et ne vous sollicite que pour une seule étape simple : votre approbation finale."
-        data-reveal>Our AI takes care of everything, from strategy to scheduling, and brings you in for one simple step:
-        your final approval.</p>
+      <p class="visibility__body" data-reveal>You are excellent at what you do. Now let's make sure your market knows
+        it.<br />
+        Empower your marketing operation today and get your time back.</p>
+    </section>
 
-      <div class="workflow-timeline">
-
-        <div class="workflow-step" data-reveal>
-          <div class="step-number">01</div>
-          <div class="step-content">
-            <h3 class="step-title" data-en="The AI learns your brand" data-fr="L'IA apprend votre marque">The AI learns
-              your brand</h3>
-            <p class="step-desc"
-              data-en="It learns your brand's voice, audience, and industry to create impactful content."
-              data-fr="Elle apprend la voix de votre marque, votre audience et votre industrie pour créer du contenu percutant.">
-              It learns your brand's voice, audience, and industry to create impactful content.</p>
+    <!-- ===================== OPERATION ===================== -->
+    <section class="operation" id="operation" data-theme="light">
+      <h2 class="operation__title" data-reveal>We run the entire operation so you don't have to.</h2>
+      <div class="operation__rows">
+        <div class="op-row card-hover" data-reveal>
+          <h3 class="op-row__name">Search &amp; Local<br />Visibility</h3>
+          <div class="op-row__text">
+            <p>When potential clients search for an expert in your area, they find you.</p>
+            <p>We make sure your name shows up first, clearly and steadily.</p>
           </div>
         </div>
-
-        <div class="workflow-step" data-reveal>
-          <div class="step-number">02</div>
-          <div class="step-content">
-            <h3 class="step-title" data-en="Autonomous creation and planning"
-              data-fr="Création et planification autonomes">Autonomous creation and planning</h3>
-            <p class="step-desc" data-en="Using your brand profile, the AI creates high-quality, on-brand content."
-              data-fr="En utilisant votre profil de marque, l'IA crée du contenu de haute qualité fidèle à votre image.">
-              Using your brand profile, the AI creates high-quality, on-brand content.</p>
+        <div class="op-row card-hover" data-reveal>
+          <h3 class="op-row__name">Content Creation<br />&amp; Posting</h3>
+          <div class="op-row__text">
+            <p>Your brand stays active with thoughtful, well-written posts that actually sound like you.</p>
+            <p>We write, review, and publish across your channels so your audience sees a steady presence every week.
+            </p>
           </div>
         </div>
-
-        <div class="workflow-step" data-reveal>
-          <div class="step-number">03</div>
-          <div class="step-content">
-            <h3 class="step-title" data-en="Only approve the delivery" data-fr="Approuvez simplement la livraison">Only
-              approve the delivery</h3>
-            <p class="step-desc" data-en="It delivers a pre-scheduled content queue, ensuring you have the final say."
-              data-fr="Elle livre une file de contenu pré-planifiée, vous assurant le dernier mot.">It delivers a
-              pre-scheduled content queue, ensuring you have the final say.</p>
+        <div class="op-row card-hover" data-reveal>
+          <h3 class="op-row__name">Market<br />Monitoring</h3>
+          <div class="op-row__text">
+            <p>We keep an eye on your market and adjust your content so your brand always stands out as the clear
+              leader.</p>
+            <p>Never worry about competitors again.</p>
           </div>
         </div>
-
-        <div class="workflow-step" data-reveal>
-          <div class="step-number">04</div>
-          <div class="step-content">
-            <h3 class="step-title" data-en="Automated posting and improving"
-              data-fr="Publication et amélioration automatisées">Automated posting and improving</h3>
-            <p class="step-desc"
-              data-en="Once approved, it posts your content and analyzes results and improves itself."
-              data-fr="Une fois approuvé, elle publie votre contenu, analyse les résultats et s'améliore.">Once
-              approved, it posts your content and analyzes results and improves itself.</p>
-          </div>
-        </div>
-
       </div>
-    </div>
-  </section>
+      <div style="text-align:center; margin-top:80px;" data-reveal>
+        <a href="features.html" class="btn btn--ghost btn--ghost-accent op-btn">See All Features</a>
+      </div>
+    </section>
 
-  <!-- ═══════════ FINAL CTA ═══════════ -->
-  <section class="cta-final" id="cta-final">
-    <div class="container">
-      <div class="cta-card" data-reveal>
-        <h2 class="cta-title" data-en="Master Your Content" data-fr="Maîtrisez votre contenu">Master Your Content</h2>
-        <p class="cta-desc"
-          data-en="Stop juggling tools — leverage the power of an autonomous content system. Join the list to be among the first to experience LeapSphere and drive your growth effortlessly."
-          data-fr="Arrêtez de jongler entre les outils — profitez de la puissance d'un système de contenu autonome. Rejoignez la liste pour être parmi les premiers à découvrir LeapSphere et stimuler votre croissance sans effort.">
-          Stop juggling tools — leverage the power of an autonomous content system. Join the list to be among the first
-          to experience LeapSphere and drive your growth effortlessly.</p>
-
-        <form class="cta-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" id="ctaForm">
-          <div class="form-group">
-            <input type="email" name="email" required placeholder="Enter your email" class="form-input"
-              data-en-placeholder="Enter your email" data-fr-placeholder="Entrez votre courriel">
-            <button type="submit" class="btn btn-primary" data-en="Get Early Access" data-fr="Accès anticipé">Get Early
-              Access</button>
+    <!-- ===================== COMPARISON ===================== -->
+    <section class="comparison" id="comparison" data-theme="light">
+      <h2 class="comparison__title" data-reveal>Best Alternative Available</h2>
+      <div class="comparison__grid">
+        <article class="compare-card card-hover" data-reveal>
+          <h3 class="compare-card__head">Internal Team</h3>
+          <span class="compare-card__rule"></span>
+          <div class="compare-card__body">
+            <div class="compare-item">
+              <p class="compare-item__title">Price:</p>
+              <p>A full team’s worth of salaries, benefits, and overhead</p>
+            </div>
+            <div class="compare-item">
+              <p class="compare-item__title">Insight:</p>
+              <p>Limited to what your team can track and analyze in-house</p>
+            </div>
+            <div class="compare-item">
+              <p class="compare-item__title">Time saved:</p>
+              <p>None — you’re now managing an entire team</p>
+            </div>
+            <div class="compare-item">
+              <p class="compare-item__title">Consistency:</p>
+              <p>Tied to your team's workload and bandwidth</p>
+            </div>
+            <div class="compare-item">
+              <p class="compare-item__title">Reliability:</p>
+              <p>Any one of them can leave, taking knowledge with them</p>
+            </div>
           </div>
+        </article>
+
+        <article class="compare-card card-hover" data-reveal>
+          <h3 class="compare-card__head">Agency</h3>
+          <span class="compare-card__rule"></span>
+          <div class="compare-card__body">
+            <div class="compare-item">
+              <p class="compare-item__title">Price:</p>
+              <p>Expensive retainer fees, month after month</p>
+            </div>
+            <div class="compare-item">
+              <p class="compare-item__title">Insight:</p>
+              <p>The same playbook applied across every client</p>
+            </div>
+            <div class="compare-item">
+              <p class="compare-item__title">Time saved:</p>
+              <p>Some, but you're still managing the relationship</p>
+            </div>
+            <div class="compare-item">
+              <p class="compare-item__title">Consistency:</p>
+              <p>Bursts of activity around campaigns, then quiet</p>
+            </div>
+            <div class="compare-item">
+              <p class="compare-item__title">Reliability:</p>
+              <p>Your contact changes, your strategy resets</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="compare-card compare-card--accent card-hover" data-reveal>
+          <h3 class="compare-card__head">LeapSphere</h3>
+          <span class="compare-card__rule"></span>
+          <div class="compare-card__body">
+            <div class="compare-item">
+              <p class="compare-item__title">Price:</p>
+              <p>A fraction of the cost, for everything above and more</p>
+            </div>
+            <div class="compare-item">
+              <p class="compare-item__title">Insight:</p>
+              <p>A specialized engine built for your industry, checked by a real expert every time</p>
+            </div>
+            <div class="compare-item">
+              <p class="compare-item__title">Time saved:</p>
+              <p>85–100 hours a week, handled for you</p>
+            </div>
+            <div class="compare-item">
+              <p class="compare-item__title">Consistency:</p>
+              <p>Runs 24/7 — the system keeps everything consistent, always</p>
+            </div>
+            <div class="compare-item">
+              <p class="compare-item__title">Reliability:</p>
+              <p>No turnover. Nothing to relearn, ever</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== TESTIMONIALS ===================== -->
+    <section class="testimonials" id="testimonials" data-theme="light" style="display: none;">
+      <h2 class="testimonials__title" data-reveal>Testimonials from other Experts</h2>
+      <div class="testimonials__row">
+        <figure class="tframe" data-reveal>
+          <div class="tframe__inner">
+            <video class="tframe__video" muted loop playsinline preload="metadata" poster="">
+              <source src="videos/1.mp4" type="video/mp4" />
+            </video>
+            <span class="tframe__placeholder">Frontend<br />developer</span>
+          </div>
+        </figure>
+        <figure class="tframe tframe--center" data-reveal>
+          <div class="tframe__inner">
+            <video class="tframe__video" muted loop playsinline preload="metadata" poster="">
+              <source src="videos/2.mp4" type="video/mp4" />
+            </video>
+            <span class="tframe__placeholder">Enterprise<br />developer</span>
+          </div>
+        </figure>
+        <figure class="tframe" data-reveal>
+          <div class="tframe__inner">
+            <video class="tframe__video" muted loop playsinline preload="metadata" poster="">
+              <source src="videos/3.mp4" type="video/mp4" />
+            </video>
+            <span class="tframe__placeholder">Expert</span>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===================== CTA + FOOTER ===================== -->
+    <footer class="footer" id="cta" data-theme="light">
+      <div class="footer__cta">
+        <h2 class="footer__title" data-reveal>Ready to become the first name people think of?</h2>
+        <p class="footer__sub" data-reveal>You are excellent at what you do. Now let's make sure your market knows
+          it.<br />
+          Empower your marketing operation today and get your time back.</p>
+        <form class="footer__form" data-reveal action="https://formspree.io/f/mwvgwakp" method="POST">
+          <input type="email" name="email" class="footer__input" placeholder="enter your email"
+            aria-label="Email address" required />
+          <button type="submit" class="btn btn--accent">Partner with LeapSphere</button>
         </form>
       </div>
-    </div>
-  </section>
 
-  <!-- ═══════════ FOOTER ═══════════ -->
-  <footer class="footer" id="footer">
-    <div class="container">
-      <div class="footer-inner">
-        <div class="footer-brand">
-          <a href="#" class="nav-logo">
-            <span class="logo-text">LeapSphere</span>
-            <svg class="logo-icon" width="28" height="25" viewBox="0 0 1278 1137" fill="none"
-              xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <defs>
-                <linearGradient id="logo-grad-nav" x1="0%" y1="50%" x2="100%" y2="50%">
-                  <stop offset="0%" stop-color="#8374F1" />
-                  <stop offset="100%" stop-color="#5EC8D8" />
-                </linearGradient>
-                <linearGradient id="logo-grad-nav2" x1="0%" y1="50%" x2="100%" y2="50%">
-                  <stop offset="0%" stop-color="#9B8CF5" />
-                  <stop offset="100%" stop-color="#76D4EB" />
-                </linearGradient>
-              </defs>
-              <mask id="logo-mask-nav" fill="white">
-                <path
-                  d="M237.567 641.481C106.363 549.611 74.4759 368.772 166.347 237.567C258.217 106.362 439.056 74.4758 570.26 166.346L1040.02 495.278C1171.23 587.149 1203.12 767.988 1111.24 899.192C1019.37 1030.4 838.536 1062.28 707.331 970.413L237.567 641.481Z" />
-              </mask>
-              <path
-                d="M570.26 166.346L501.431 264.645L971.195 593.577L1040.02 495.278L1108.85 396.98L639.09 68.0482L570.26 166.346ZM707.331 970.413L776.16 872.115L306.397 543.183L237.567 641.481L168.738 739.78L638.502 1068.71L707.331 970.413ZM1111.24 899.192L1012.95 830.363C959.089 907.279 853.076 925.972 776.16 872.115L707.331 970.413L638.502 1068.71C823.995 1198.6 1079.66 1153.52 1209.54 968.022L1111.24 899.192ZM1040.02 495.278L971.195 593.577C1048.11 647.434 1066.8 753.447 1012.95 830.363L1111.24 899.192L1209.54 968.022C1339.43 782.528 1294.35 526.864 1108.85 396.98L1040.02 495.278ZM166.347 237.567L264.645 306.397C318.502 229.48 424.515 210.787 501.431 264.645L570.26 166.346L639.09 68.0482C453.596 -61.8357 197.932 -16.7553 68.0483 168.738L166.347 237.567ZM166.347 237.567L68.0483 168.738C-61.8357 354.232 -16.7552 609.896 168.738 739.78L237.567 641.481L306.397 543.183C229.48 489.326 210.787 383.313 264.645 306.397L166.347 237.567Z"
-                fill="url(#logo-grad-nav)" mask="url(#logo-mask-nav)" />
-              <path
-                d="M638.835 360.8L306.396 593.577C229.48 647.434 210.788 753.447 264.645 830.363C318.503 907.279 424.514 925.972 501.431 872.115L534.177 849.185L638.824 922.402L570.26 970.413L568.721 971.484C437.644 1062.03 257.858 1029.88 166.347 899.192L165.275 897.652C75.0817 767.09 106.625 588.199 236.035 496.359L237.567 495.278L534.213 287.564L638.835 360.8ZM707.331 166.346C838.536 74.476 1019.37 106.363 1111.25 237.567L1112.32 239.107C1202.87 370.184 1170.72 549.969 1040.02 641.481L743.391 849.183L638.799 775.927L971.194 543.182C1048.11 489.325 1066.8 383.312 1012.95 306.396C959.09 229.48 853.076 210.787 776.16 264.644L743.391 287.589L638.801 214.331L707.331 166.346Z"
-                fill="url(#logo-grad-nav2)" />
-            </svg>
-          </a>
-          <p class="footer-tagline" data-en="Smarter content, effortlessly."
-            data-fr="Un contenu plus intelligent, sans effort.">Smarter content, effortlessly.</p>
-        </div>
-        <div class="footer-links">
-          <button class="footer-link" id="openTerms" data-en="Terms & Conditions" data-fr="Conditions générales">Terms &
-            Conditions</button>
-          <button class="footer-link" id="openPrivacy" data-en="Privacy Policy"
-            data-fr="Politique de confidentialité">Privacy Policy</button>
-          <a href="mailto:hello@leapsphere.ai" class="footer-link">hello@leapsphere.ai</a>
-        </div>
+      <div class="footer__bottom">
+        <a href="#top" class="footer__logo" aria-label="LeapSphere home">
+          <img src="new%20brand%20assets/LeapSphere%20Logo%20Dark.svg" alt="LeapSphere" />
+        </a>
+        <nav class="footer__links">
+          <a href="#top">Home</a>
+          <a href="wip.html">About Us</a>
+          <a href="features.html">Features</a>
+          <a href="wip.html">Whitepapers</a>
+          <a href="wip.html">FAQ</a>
+        </nav>
       </div>
-      <div class="footer-bottom">
-        <p>&copy; 2025 LeapSphere. <span data-en="All rights reserved." data-fr="Tous droits réservés.">All rights
-            reserved.</span></p>
+
+      <div class="footer__legal">
+        <a href="#">Privacy</a>
+        <a href="#">Manage cookies</a>
+        <a href="#">Terms</a>
       </div>
-    </div>
-  </footer>
+    </footer>
 
-  <!-- ═══════════ TERMS MODAL ═══════════ -->
-  <div class="modal-overlay" id="termsModal">
-    <div class="modal">
-      <div class="modal-header">
-        <h2 data-en="Terms & Conditions" data-fr="Conditions générales">Terms & Conditions</h2>
-        <button class="modal-close" aria-label="Close">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p><strong data-en="Effective date: 9/16/2025" data-fr="Date d'entrée en vigueur : 16/09/2025">Effective date:
-            9/16/2025</strong></p>
-        <p data-en="Welcome to our website! Below are the Terms & Conditions that govern access and use of our pre-launch platform. Please read them carefully, as using the website constitutes your agreement to these terms."
-          data-fr="Bienvenue sur notre site Web ! Vous trouverez ci-dessous les conditions générales qui régissent l'accès et l'utilisation de notre plateforme de pré-lancement. Veuillez les lire attentivement, car l'utilisation du site Web constitue votre acceptation de ces conditions.">
-          Welcome to our website! Below are the Terms & Conditions that govern access and use of our pre-launch
-          platform. Please read them carefully, as using the website constitutes your agreement to these terms.</p>
+  </main>
 
-        <h3 data-en="Acceptance of Terms" data-fr="Acceptation des conditions">Acceptance of Terms</h3>
-        <p data-en="By accessing and using the website located at LeapSphere.ai, you agree to these Terms & Conditions in full and comply with all applicable laws and regulations. If you disagree with any of these terms, you are prohibited from using or accessing the website."
-          data-fr="En accédant et en utilisant le site Web situé à LeapSphere.ai, vous acceptez ces conditions générales dans leur intégralité et vous vous conformez à toutes les lois et réglementations applicables. Si vous n'acceptez pas l'une de ces conditions, il vous est interdit d'utiliser ou d'accéder au site Web.">
-          By accessing and using the website located at LeapSphere.ai, you agree to these Terms & Conditions in full and
-          comply with all applicable laws and regulations. If you disagree with any of these terms, you are prohibited
-          from using or accessing the website.</p>
-
-        <h3 data-en="Intellectual Property Rights" data-fr="Droits de propriété intellectuelle">Intellectual Property
-          Rights</h3>
-        <p data-en="All content, features, and functionality on this website (including text, software, images, videos, and designs) are owned by Leapsphere and protected under Canadian and international copyright and trademark laws. You may not copy, reproduce, or distribute any website material without prior written consent."
-          data-fr="Tout le contenu, les fonctionnalités et les caractéristiques de ce site Web (y compris les textes, logiciels, images, vidéos et designs) sont la propriété de Leapsphere et protégés par les lois canadiennes et internationales sur le droit d'auteur et les marques de commerce. Vous ne pouvez pas copier, reproduire ou distribuer tout matériel du site Web sans consentement écrit préalable.">
-          All content, features, and functionality on this website (including text, software, images, videos, and
-          designs) are owned by Leapsphere and protected under Canadian and international copyright and trademark laws.
-          You may not copy, reproduce, or distribute any website material without prior written consent.</p>
-
-        <h3 data-en="User Conduct" data-fr="Conduite de l'utilisateur">User Conduct</h3>
-        <p data-en="Users are expected to engage responsibly with the platform. By accessing the site, you agree to comply with all local, provincial, or federal laws; avoid activities like spamming, hacking, or interfering with the site's performance; not use the site for fraudulent or illegal purposes; provide accurate information when signing up for the waitlist; and refrain from attempting unauthorized access to any part of the website or its systems."
-          data-fr="Les utilisateurs doivent interagir de manière responsable avec la plateforme. En accédant au site, vous acceptez de vous conformer à toutes les lois locales, provinciales ou fédérales ; d'éviter les activités telles que le spam, le piratage ou l'interférence avec les performances du site ; de ne pas utiliser le site à des fins frauduleuses ou illégales ; de fournir des informations exactes lors de l'inscription sur la liste d'attente ; et de ne pas tenter d'accéder sans autorisation à toute partie du site Web ou de ses systèmes.">
-          Users are expected to engage responsibly with the platform. By accessing the site, you agree to comply with
-          all local, provincial, or federal laws; avoid activities like spamming, hacking, or interfering with the
-          site's performance; not use the site for fraudulent or illegal purposes; provide accurate information when
-          signing up for the waitlist; and refrain from attempting unauthorized access to any part of the website or its
-          systems.</p>
-
-        <h3 data-en="Waitlist Terms" data-fr="Conditions de la liste d'attente">Waitlist Terms</h3>
-        <p data-en="By signing up for our waitlist, you acknowledge: No Guarantee of Access — Joining the waitlist does not guarantee access to Leapsphere's AI or participation in a beta program. Management Rights — We may modify, manage, or discontinue the waitlist at our discretion without prior notice. Participant Selection — Waitlist participants are selected solely at our discretion. Communication Consent — You agree to receive emails about your waitlist status and product updates. Data Handling — If our business model changes or development is halted, waitlist data will be managed per our Privacy Policy."
-          data-fr="En vous inscrivant sur notre liste d'attente, vous reconnaissez : Aucune garantie d'accès — Rejoindre la liste d'attente ne garantit pas l'accès à l'IA de Leapsphere ou la participation à un programme bêta. Droits de gestion — Nous pouvons modifier, gérer ou interrompre la liste d'attente à notre discrétion sans préavis. Sélection des participants — Les participants à la liste d'attente sont sélectionnés à notre seule discrétion. Consentement aux communications — Vous acceptez de recevoir des courriels concernant votre statut sur la liste d'attente et les mises à jour du produit. Gestion des données — Si notre modèle commercial change ou si le développement est interrompu, les données de la liste d'attente seront gérées conformément à notre politique de confidentialité.">
-          By signing up for our waitlist, you acknowledge: No Guarantee of Access — Joining the waitlist does not
-          guarantee access to Leapsphere's AI or participation in a beta program. Management Rights — We may modify,
-          manage, or discontinue the waitlist at our discretion without prior notice. Participant Selection — Waitlist
-          participants are selected solely at our discretion. Communication Consent — You agree to receive emails about
-          your waitlist status and product updates. Data Handling — If our business model changes or development is
-          halted, waitlist data will be managed per our Privacy Policy.</p>
-
-        <h3 data-en="Pre-Launch Disclaimers" data-fr="Avis de pré-lancement">Pre-Launch Disclaimers</h3>
-        <p data-en="Product Development: Leapsphere's AI is currently under development and may not yet be publicly available. Feature Changes: Specifications, features, and functionality are subject to change without notice. No Guarantees: We cannot guarantee development timelines, product availability, or finalized features. Development Rights: Product development may be suspended or discontinued at any time without prior notice."
-          data-fr="Développement du produit : L'IA de Leapsphere est actuellement en cours de développement et pourrait ne pas encore être disponible au public. Modifications des fonctionnalités : Les spécifications, fonctionnalités et caractéristiques sont sujettes à modification sans préavis. Aucune garantie : Nous ne pouvons pas garantir les délais de développement, la disponibilité du produit ou les fonctionnalités finalisées. Droits de développement : Le développement du produit peut être suspendu ou interrompu à tout moment sans préavis.">
-          Product Development: Leapsphere's AI is currently under development and may not yet be publicly available.
-          Feature Changes: Specifications, features, and functionality are subject to change without notice. No
-          Guarantees: We cannot guarantee development timelines, product availability, or finalized features.
-          Development Rights: Product development may be suspended or discontinued at any time without prior notice.</p>
-
-        <h3 data-en="Third Party Services" data-fr="Services tiers">Third Party Services</h3>
-        <p data-en="Our website integrates third-party services like Google Analytics, HubSpot, and Hotjar. By using our site, you agree to their respective terms and privacy policies. We are not responsible for their practices."
-          data-fr="Notre site Web intègre des services tiers tels que Google Analytics, HubSpot et Hotjar. En utilisant notre site, vous acceptez leurs conditions et politiques de confidentialité respectives. Nous ne sommes pas responsables de leurs pratiques.">
-          Our website integrates third-party services like Google Analytics, HubSpot, and Hotjar. By using our site, you
-          agree to their respective terms and privacy policies. We are not responsible for their practices.</p>
-
-        <h3 data-en="Disclaimer of Warranties" data-fr="Clause de non-responsabilité">Disclaimer of Warranties</h3>
-        <p data-en="The website and its content are provided 'as is' without any warranties, expressed or implied. LeapSphere does not guarantee uninterrupted access or error-free functionality."
-          data-fr="Le site Web et son contenu sont fournis « tels quels » sans aucune garantie, expresse ou implicite. LeapSphere ne garantit pas un accès ininterrompu ou un fonctionnement sans erreur.">
-          The website and its content are provided "as is" without any warranties, expressed or implied. LeapSphere does
-          not guarantee uninterrupted access or error-free functionality.</p>
-
-        <h3 data-en="Limitation of Liability" data-fr="Limitation de responsabilité">Limitation of Liability</h3>
-        <p data-en="LeapSphere is not liable for damages resulting from your use or inability to use the website. This limitation applies even if LeapSphere was informed of potential damages."
-          data-fr="LeapSphere n'est pas responsable des dommages résultant de votre utilisation ou de votre incapacité à utiliser le site Web. Cette limitation s'applique même si LeapSphere a été informé des dommages potentiels.">
-          LeapSphere is not liable for damages resulting from your use or inability to use the website. This limitation
-          applies even if LeapSphere was informed of potential damages.</p>
-
-        <h3 data-en="Governing Law" data-fr="Loi applicable">Governing Law</h3>
-        <p data-en="These Terms & Conditions are governed by the laws of Quebec, Canada. You consent to the exclusive jurisdiction of courts in Quebec, Canada."
-          data-fr="Ces conditions générales sont régies par les lois du Québec, Canada. Vous consentez à la juridiction exclusive des tribunaux du Québec, Canada.">
-          These Terms & Conditions are governed by the laws of Quebec, Canada. You consent to the exclusive jurisdiction
-          of courts in Quebec, Canada.</p>
-
-        <h3 data-en="Contact Us" data-fr="Contactez-nous">Contact Us</h3>
-        <p data-en="For questions regarding these Terms & Conditions, contact us at hello@leapsphere.ai."
-          data-fr="Pour toute question concernant ces conditions générales, contactez-nous à hello@leapsphere.ai.">For
-          questions regarding these Terms & Conditions, contact us at hello@leapsphere.ai.</p>
-      </div>
+  <!-- ============================== POPUP MODAL ============================== -->
+  <div class="popup-modal" id="contactModal" aria-hidden="true">
+    <div class="popup-modal__overlay" id="contactModalOverlay"></div>
+    <div class="popup-modal__content">
+      <button class="popup-modal__close" id="contactModalClose" aria-label="Close modal">&times;</button>
+      <form class="popup-modal__form" action="https://formspree.io/f/mwvgwakp" method="POST">
+        <h3 class="popup-modal__title">Partner with LeapSphere</h3>
+        <input type="email" name="email" class="popup-modal__input" placeholder="enter your email"
+          aria-label="Email address" required />
+        <button type="submit" class="btn btn--accent popup-modal__submit">Submit</button>
+      </form>
     </div>
   </div>
 
-  <!-- ═══════════ PRIVACY MODAL ═══════════ -->
-  <div class="modal-overlay" id="privacyModal">
-    <div class="modal">
-      <div class="modal-header">
-        <h2 data-en="Privacy Policy" data-fr="Politique de confidentialité">Privacy Policy</h2>
-        <button class="modal-close" aria-label="Close">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p><strong data-en="Effective date: 9/16/2025" data-fr="Date d'entrée en vigueur : 16/09/2025">Effective date:
-            9/16/2025</strong></p>
-
-        <h3 data-en="Introduction" data-fr="Introduction">Introduction</h3>
-        <p data-en="LeapSphere is dedicated to safeguarding the privacy of our website visitors. This Privacy Policy outlines what personal and non-personal information we collect, how we use it, and your rights regarding your data when interacting with our pre-launch website."
-          data-fr="LeapSphere est dédiée à la protection de la vie privée de nos visiteurs. Cette politique de confidentialité décrit les informations personnelles et non personnelles que nous collectons, comment nous les utilisons et vos droits concernant vos données lorsque vous interagissez avec notre site Web de pré-lancement.">
-          LeapSphere is dedicated to safeguarding the privacy of our website visitors. This Privacy Policy outlines what
-          personal and non-personal information we collect, how we use it, and your rights regarding your data when
-          interacting with our pre-launch website.</p>
-
-        <h3 data-en="Information Collected" data-fr="Informations collectées">Information Collected</h3>
-        <p data-en="When you sign up for our waitlist, we collect the email address you provide. Additionally, we may automatically collect non-personal data for website analytics and service improvement, including IP address, browser type, device information, pages visited, time spent on our website, referral sources, and user interactions."
-          data-fr="Lorsque vous vous inscrivez sur notre liste d'attente, nous recueillons l'adresse courriel que vous fournissez. De plus, nous pouvons automatiquement collecter des données non personnelles à des fins d'analyse de site Web et d'amélioration du service, y compris l'adresse IP, le type de navigateur, les informations sur l'appareil, les pages visitées, le temps passé sur notre site Web, les sources de référence et les interactions utilisateur.">
-          When you sign up for our waitlist, we collect the email address you provide. Additionally, we may
-          automatically collect non-personal data for website analytics and service improvement, including IP address,
-          browser type, device information, pages visited, time spent on our website, referral sources, and user
-          interactions.</p>
-
-        <h3 data-en="How We Use Information" data-fr="Comment nous utilisons les informations">How We Use Information
-        </h3>
-        <p data-en="The email address you provide is used exclusively for sending updates about the launch of LeapSphere's AI, providing important announcements, and offering exclusive invitations to our beta program. We do not use your personal information for any purpose beyond those explicitly stated."
-          data-fr="L'adresse courriel que vous fournissez est utilisée exclusivement pour envoyer des mises à jour sur le lancement de l'IA de LeapSphere, fournir des annonces importantes et offrir des invitations exclusives à notre programme bêta. Nous n'utilisons pas vos informations personnelles à des fins autres que celles explicitement énoncées.">
-          The email address you provide is used exclusively for sending updates about the launch of LeapSphere's AI,
-          providing important announcements, and offering exclusive invitations to our beta program. We do not use your
-          personal information for any purpose beyond those explicitly stated.</p>
-
-        <h3 data-en="Data Sharing and Disclosure" data-fr="Partage et divulgation des données">Data Sharing and
-          Disclosure</h3>
-        <p data-en="We will not sell, rent, or trade your personal information to third parties. We may share your information with service providers (Google Analytics, HubSpot, Hotjar) to manage our email list or analyze website traffic, for legal compliance if required by law, or to protect our rights if necessary."
-          data-fr="Nous ne vendrons, ne louerons ni n'échangerons vos informations personnelles à des tiers. Nous pouvons partager vos informations avec des fournisseurs de services (Google Analytics, HubSpot, Hotjar) pour gérer notre liste de courriels ou analyser le trafic du site Web, pour la conformité légale si la loi l'exige, ou pour protéger nos droits si nécessaire.">
-          We will not sell, rent, or trade your personal information to third parties. We may share your information
-          with service providers (Google Analytics, HubSpot, Hotjar) to manage our email list or analyze website
-          traffic, for legal compliance if required by law, or to protect our rights if necessary.</p>
-
-        <h3 data-en="Your Rights" data-fr="Vos droits">Your Rights</h3>
-        <p data-en="You have several rights regarding the personal information we collect, including: Unsubscribe from communications at any time; Access a copy of your personal data; Request corrections or deletion; Request data portability; Object to the processing of your data under certain conditions."
-          data-fr="Vous disposez de plusieurs droits concernant les informations personnelles que nous collectons, notamment : Se désabonner des communications à tout moment ; Accéder à une copie de vos données personnelles ; Demander des corrections ou une suppression ; Demander la portabilité des données ; S'opposer au traitement de vos données dans certaines conditions.">
-          You have several rights regarding the personal information we collect, including: Unsubscribe from
-          communications at any time; Access a copy of your personal data; Request corrections or deletion; Request data
-          portability; Object to the processing of your data under certain conditions.</p>
-
-        <h3 data-en="Data Protection" data-fr="Protection des données">Data Protection</h3>
-        <p data-en="We take appropriate measures to protect your information from unauthorized access, use, or disclosure. All personal data is stored on secure servers and safeguarded using industry-standard security protocols."
-          data-fr="Nous prenons les mesures appropriées pour protéger vos informations contre l'accès, l'utilisation ou la divulgation non autorisés. Toutes les données personnelles sont stockées sur des serveurs sécurisés et protégées à l'aide de protocoles de sécurité conformes aux normes de l'industrie.">
-          We take appropriate measures to protect your information from unauthorized access, use, or disclosure. All
-          personal data is stored on secure servers and safeguarded using industry-standard security protocols.</p>
-
-        <h3 data-en="Contact Us" data-fr="Contactez-nous">Contact Us</h3>
-        <p data-en="For questions regarding this Privacy Policy, contact us at hello@leapsphere.ai."
-          data-fr="Pour toute question concernant cette politique de confidentialité, contactez-nous à hello@leapsphere.ai.">
-          For questions regarding this Privacy Policy, contact us at hello@leapsphere.ai.</p>
-      </div>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+  <!-- ============================== SCRIPTS ============================== -->
+  <script src="vendor/lenis.min.js"></script>
+  <script src="GSAP/dist/gsap.min.js"></script>
+  <script src="GSAP/dist/ScrollTrigger.min.js"></script>
+  <script src="GSAP/dist/TextPlugin.min.js"></script>
+  <script src="js/main.js"></script>
 </body>
 
 </html>
