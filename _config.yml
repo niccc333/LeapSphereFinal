@@ -1,0 +1,9 @@
+﻿exclude:
+  - node_modules/
+  - lenis/
+  - GSAP/
+  - vendor/
+  - vanta/
+  - package.json
+  - package-lock.json
+  - server.mjs
