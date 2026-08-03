@@ -148,13 +148,13 @@ html.lenis, html.lenis body{ height:auto; }
 
 .hero__layer{
   position:absolute; inset:0;
-  display:flex; align-items:center;
+  display:flex; align-items:center; justify-content:center; text-align:center;
   padding:0 clamp(24px,6vw,84px);
 }
 .hero__layer--light{ background:var(--porcelain); }
 .hero__layer--dark{ background:var(--dark); opacity:0; pointer-events:none; }
 
-.hero__inner{ max-width:760px; padding-top:40px; }
+.hero__inner{ max-width:760px; padding-top:40px; margin:0 auto; display:flex; flex-direction:column; align-items:center; }
 .hero__title{
   font-size:clamp(38px,5vw,62px); font-weight:500; line-height:1.05; letter-spacing:-.02em;
   min-height:1.1em;
@@ -202,10 +202,10 @@ html.lenis, html.lenis body{ height:auto; }
 /* dark layer content */
 .hero__inner--dark{
   width:100%; max-width:1300px;
-  display:grid; grid-template-columns:1fr 280px; gap: clamp(80px, 10vw, 160px); justify-content: space-between; align-items:start;
-  padding-top:40px;
+  display:grid; grid-template-columns:1fr 280px; gap: clamp(80px, 10vw, 160px); justify-content: space-between; align-items:center;
+  padding-top:40px; text-align:left;
 }
-.hero__title--dark{ color:var(--porcelain); max-width:18ch; }
+.hero__title--dark{ color:var(--porcelain); max-width:26ch; }
 .hero__title--dark::after{ content:""; animation:none; }
 .hero__sub--dark{ color:#b9bd8e; }
 .hero__actions{ display:flex; gap:20px; margin-top:min(14vh,120px); flex-wrap:wrap; }
@@ -226,12 +226,12 @@ html.lenis, html.lenis body{ height:auto; }
   display:flex; align-items:center; height:100vh;
   gap:clamp(30px,4vw,70px); padding:0 clamp(24px,6vw,84px); width:max-content;
 }
-.h-panel--intro{ width:min(46vw,640px); flex:0 0 auto; color:var(--porcelain); }
+.h-panel--intro{ width:calc(100vw - clamp(24px, 6vw, 84px) * 2); flex:0 0 auto; color:var(--porcelain); text-align:center; display:flex; flex-direction:column; align-items:center; }
 .h-panel__heading{
   font-size:clamp(40px,4.6vw,68px); font-weight:400; line-height:1.04; letter-spacing:-.02em;
   margin-bottom:38px;
 }
-.h-panel__lead{ color:#b9bd8e; font-size:clamp(15px,1.2vw,18px); max-width:34ch; margin-bottom:20px; }
+.h-panel__lead{ color:#b9bd8e; font-size:clamp(15px,1.2vw,18px); max-width:34ch; margin-bottom:20px; margin-left:auto; margin-right:auto; }
 
 .h-cards-wrapper{
   display:flex; align-items:flex-start; gap:clamp(30px,4vw,70px);
