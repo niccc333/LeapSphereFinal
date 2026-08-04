@@ -1,0 +1,42 @@
+Sitemap: https://leapsphere.ai/sitemap.xml
+
+# ----------------------------------------
+# 1. Allow AI Search/RAG Bots (For Citations & Visibility)
+# ----------------------------------------
+
+# OpenAI Search (ChatGPT web browsing)
+User-agent: OAI-SearchBot
+Allow: /
+
+# Perplexity AI Search
+User-agent: PerplexityBot
+Allow: /
+
+# Anthropic Claude Search
+User-agent: Claude-SearchBot
+Allow: /
+
+# Google's Standard Bot (Powers AI Overviews)
+User-agent: Googlebot
+Allow: /
+
+
+# ----------------------------------------
+# 2. Allow AI Training Bots (Optional: To feed their knowledge base)
+# ----------------------------------------
+
+# OpenAI Model Training
+User-agent: GPTBot
+Allow: /
+
+# Anthropic Model Training
+User-agent: ClaudeBot
+Allow: /
+
+# Google Gemini/Vertex Training
+User-agent: Google-Extended
+Allow: /
+
+# Apple Intelligence Training
+User-agent: Applebot-Extended
+Allow: /

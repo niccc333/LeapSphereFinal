@@ -154,7 +154,7 @@ html.lenis, html.lenis body{ height:auto; }
 .hero__layer--light{ background:var(--porcelain); }
 .hero__layer--dark{ background:var(--dark); opacity:0; pointer-events:none; }
 
-.hero__inner{ max-width:760px; padding-top:40px; margin:0 auto; display:flex; flex-direction:column; align-items:center; }
+.hero__inner{ position:relative; z-index:1; max-width:760px; padding-top:40px; margin:0 auto; display:flex; flex-direction:column; align-items:center; }
 .hero__title{
   font-size:clamp(38px,5vw,62px); font-weight:500; line-height:1.05; letter-spacing:-.02em;
   min-height:1.1em;
@@ -174,6 +174,7 @@ html.lenis, html.lenis body{ height:auto; }
 
 .scroll-mouse {
   position: absolute;
+  z-index: 1;
   bottom: clamp(20px, 5vh, 40px);
   left: 50%;
   transform: translateX(-50%);

@@ -86,12 +86,13 @@ function heroMorph() {
     scrollTrigger: {
       trigger: "#hero",
       start: "top top",
-      end: "+=35%",
+      end: "+=150%",
       pin: ".hero__pin",
       pinSpacing: true,
       scrub: 0.6,
       onUpdate: (self) => {
-        const dark2 = self.progress > 0.5;
+        // total duration is 4, animation is 1. Halfway through animation is 0.5 / 4 = 0.125
+        const dark2 = self.progress > 0.125;
         nav.classList.toggle("nav--dark", dark2);
         navCta.classList.toggle("is-shown", dark2);
         dark.style.pointerEvents = dark2 ? "auto" : "none";
@@ -107,7 +108,8 @@ function heroMorph() {
       { opacity: 0, filter: "blur(14px)" },
       { opacity: 1, filter: "blur(0px)", duration: 1, ease: "power1.inOut" },
       0
-    );
+    )
+    .set({}, {}, "+=3"); // keep the dark section pinned for longer
 }
 
 /* ---------------------------------------------------------------
@@ -221,7 +223,7 @@ function wireVideos() {
     }
 
     frame.addEventListener("mouseenter", () => {
-      if (video.readyState >= 2) video.play().catch(() => {});
+      if (video.readyState >= 2) video.play().catch(() => { });
     });
     frame.addEventListener("mouseleave", () => video.pause());
   });
@@ -282,36 +284,40 @@ const HERO_TITLE = {
 
 const I18N = [
   // buttons (three separate "Partner with LeapSphere")
-  { sel: ".nav__cta",        fr: "Devenez partenaire de LeapSphere" },
-  { sel: ".hero__btn",       fr: "Devenez partenaire de LeapSphere" },
+  { sel: ".nav__cta", fr: "Devenez partenaire de LeapSphere" },
+  { sel: ".hero__btn", fr: "Devenez partenaire de LeapSphere" },
   { sel: ".footer__form .btn", fr: "Devenez partenaire de LeapSphere" },
 
   // navigation / footer link lists
   { sel: ".menu-overlay__links .menu-link", fr: ["Accueil", "À propos", "Fonctionnalités", "Livres blancs", "FAQ"] },
-  { sel: ".footer__links a",                fr: ["Accueil", "À propos", "Fonctionnalités", "Livres blancs", "FAQ"] },
+  { sel: ".footer__links a", fr: ["Accueil", "À propos", "Fonctionnalités", "Livres blancs", "FAQ"] },
 
   // hero (light)
   { sel: ".hero__sub", fr: "Arrêtez de perdre des heures sur un marketing qui ne mène nulle part. Nous gérons votre contenu, de la stratégie à la publication. Vous restez concentré sur votre entreprise." },
 
   // hero (dark)
   { sel: ".hero__title--dark", fr: "Les bons produits et services méritent d’être vus" },
-  { sel: ".hero__sub--dark",   fr: "Confiez toute votre stratégie marketing à LeapSphere.<br>Oui, l’intégralité." },
+  { sel: ".hero__sub--dark", fr: "Confiez toute votre stratégie marketing à LeapSphere.<br>Oui, l’intégralité." },
   { sel: ".hero__actions .btn", fr: ["voir les cas d’usage", "voir les fonctionnalités"] },
-  { sel: ".hero__care-label",  fr: "Nous nous occupons de :" },
+  { sel: ".hero__care-label", fr: "Nous nous occupons de :" },
   { sel: ".hero__care-list li", fr: ["Gestion du SEO", "Rédaction d’articles et de blog", "Gestion des réseaux sociaux", "Aimants à prospects", "Gestion de Hubspot", "Veille concurrentielle", "Rapports et analyses"] },
 
   // horizontal
   { sel: ".h-panel__heading", fr: "Vous avez fait le saut pour vous concentrer sur votre expertise" },
-  { sel: ".h-panel__lead", fr: [
-    "Vous êtes excellent dans votre domaine.<br>Vos clients ont besoin de votre attention.",
-    "Mais en ce moment, vous passez des heures non rémunérées à essayer de rester visible en ligne, et cela vous éloigne de votre vrai travail.",
-  ] },
+  {
+    sel: ".h-panel__lead", fr: [
+      "Vous êtes excellent dans votre domaine.<br>Vos clients ont besoin de votre attention.",
+      "Mais en ce moment, vous passez des heures non rémunérées à essayer de rester visible en ligne, et cela vous éloigne de votre vrai travail.",
+    ]
+  },
   { sel: ".h-card__title", fr: ["Le gouffre temporel", "Le silence", "La facture d’agence"] },
-  { sel: ".h-card__body", fr: [
-    "Vous passez vos soirées devant un écran vide, à rédiger des publications et à gérer des plateformes alors que vous devriez vous reposer ou servir vos clients.",
-    "Vous fournissez de réels efforts pour publier, mais rien ne se passe. La visibilité reste faible car des publications aléatoires et dispersées ne bâtissent pas une autorité durable.",
-    "Vous payez de lourds forfaits mensuels à des agences lentes, qui exigent des réunions interminables et donnent l’impression que quelqu’un d’autre a écrit vos textes.",
-  ] },
+  {
+    sel: ".h-card__body", fr: [
+      "Vous passez vos soirées devant un écran vide, à rédiger des publications et à gérer des plateformes alors que vous devriez vous reposer ou servir vos clients.",
+      "Vous fournissez de réels efforts pour publier, mais rien ne se passe. La visibilité reste faible car des publications aléatoires et dispersées ne bâtissent pas une autorité durable.",
+      "Vous payez de lourds forfaits mensuels à des agences lentes, qui exigent des réunions interminables et donnent l’impression que quelqu’un d’autre a écrit vos textes.",
+    ]
+  },
 
   // visibility
   { sel: ".visibility__title span", fr: ["Plus de visibilité.", "Moins de coûts.", "Zéro temps perdu."] },
@@ -320,27 +326,31 @@ const I18N = [
   // operation
   { sel: ".operation__title", fr: "Nous gérons toute l’opération pour que vous n’ayez pas à le faire." },
   { sel: ".op-row__name", fr: ["Visibilité locale<br>et recherche", "Création et<br>publication de contenu", "Veille du<br>marché"] },
-  { sel: ".op-row__text", fr: [
-    "<p>Lorsque des clients potentiels recherchent un expert dans votre région, ils vous trouvent.</p><p>Nous veillons à ce que votre nom apparaisse en premier, clairement et régulièrement.</p>",
-    "<p>Votre marque reste active grâce à des publications soignées et bien rédigées qui vous ressemblent vraiment.</p><p>Nous rédigeons, révisons et publions sur vos canaux afin que votre audience voie une présence régulière chaque semaine.</p>",
-    "<p>Nous surveillons votre marché et ajustons votre contenu pour que votre marque se démarque toujours comme le leader incontesté.</p><p>Ne vous souciez plus jamais de la concurrence.</p>",
-  ] },
+  {
+    sel: ".op-row__text", fr: [
+      "<p>Lorsque des clients potentiels recherchent un expert dans votre région, ils vous trouvent.</p><p>Nous veillons à ce que votre nom apparaisse en premier, clairement et régulièrement.</p>",
+      "<p>Votre marque reste active grâce à des publications soignées et bien rédigées qui vous ressemblent vraiment.</p><p>Nous rédigeons, révisons et publions sur vos canaux afin que votre audience voie une présence régulière chaque semaine.</p>",
+      "<p>Nous surveillons votre marché et ajustons votre contenu pour que votre marque se démarque toujours comme le leader incontesté.</p><p>Ne vous souciez plus jamais de la concurrence.</p>",
+    ]
+  },
   { sel: ".op-btn", fr: "Voir toutes les fonctionnalités" },
 
   // comparison
   { sel: ".comparison__title", fr: "Meilleure alternative disponible" },
   { sel: ".compare-card__head", fr: ["Équipe interne", "Agence", "LeapSphere"] },
-  { sel: ".compare-item", fr: [
-    '<p class="compare-item__title">Délais variables :</p><p>Votre marketing tourne discrètement en arrière-plan pendant que vous vous concentrez sur vos clients</p>',
-    '<p class="compare-item__title">Qualité inconstante :</p><p>LeapSphere voit ce que veut votre public et adapte la stratégie de manière adéquate</p>',
-    '<p class="compare-item__title">Coûteux :</p><p>Vous bénéficiez de la portée d\'une équipe marketing complète pour une fraction du coût, sans les frais traditionnels.</p>',
-    '<p class="compare-item__title">Zéro heure perdue :</p><p>Votre marketing tourne discrètement en arrière-plan pendant que vous vous concentrez sur vos clients</p>',
-    '<p class="compare-item__title">L\'esthétique de la marque devient confuse :</p><p>Votre marque ne vous ressemble pas</p>',
-    '<p class="compare-item__title">Coûteux :</p><p>Vous payez plus de 8 000 $ par mois uniquement en honoraires</p>',
-    '<p class="compare-item__title">Zéro heure perdue :</p><p>Votre marketing tourne discrètement en arrière-plan pendant que vous vous concentrez sur vos clients</p>',
-    '<p class="compare-item__title">Autorité durable :</p><p>Vous maintenez une présence quotidienne claire et régulière. Votre marché pense à vous en premier.</p>',
-    '<p class="compare-item__title">Un coût juste :</p><p>Vous bénéficiez de la portée d\'une équipe marketing complète pour une fraction du coût, sans les frais traditionnels.</p>',
-  ] },
+  {
+    sel: ".compare-item", fr: [
+      '<p class="compare-item__title">Délais variables :</p><p>Votre marketing tourne discrètement en arrière-plan pendant que vous vous concentrez sur vos clients</p>',
+      '<p class="compare-item__title">Qualité inconstante :</p><p>LeapSphere voit ce que veut votre public et adapte la stratégie de manière adéquate</p>',
+      '<p class="compare-item__title">Coûteux :</p><p>Vous bénéficiez de la portée d\'une équipe marketing complète pour une fraction du coût, sans les frais traditionnels.</p>',
+      '<p class="compare-item__title">Zéro heure perdue :</p><p>Votre marketing tourne discrètement en arrière-plan pendant que vous vous concentrez sur vos clients</p>',
+      '<p class="compare-item__title">L\'esthétique de la marque devient confuse :</p><p>Votre marque ne vous ressemble pas</p>',
+      '<p class="compare-item__title">Coûteux :</p><p>Vous payez plus de 8 000 $ par mois uniquement en honoraires</p>',
+      '<p class="compare-item__title">Zéro heure perdue :</p><p>Votre marketing tourne discrètement en arrière-plan pendant que vous vous concentrez sur vos clients</p>',
+      '<p class="compare-item__title">Autorité durable :</p><p>Vous maintenez une présence quotidienne claire et régulière. Votre marché pense à vous en premier.</p>',
+      '<p class="compare-item__title">Un coût juste :</p><p>Vous bénéficiez de la portée d\'une équipe marketing complète pour une fraction du coût, sans les frais traditionnels.</p>',
+    ]
+  },
 
   // testimonials
   { sel: ".testimonials__title", fr: "Témoignages d’autres experts" },
@@ -365,13 +375,13 @@ function initI18n() {
     entry._en = Array.isArray(entry.fr)
       ? Array.from(els).map((el) => el.innerHTML)
       : els.length
-      ? els[0].innerHTML
-      : null;
+        ? els[0].innerHTML
+        : null;
   });
 
   const email = document.querySelector(".footer__input");
   if (email) email.dataset.enPlaceholder = email.getAttribute("placeholder") || "";
-  
+
   const emailModal = document.querySelector(".popup-modal__input");
   if (emailModal) emailModal.dataset.enPlaceholder = emailModal.getAttribute("placeholder") || "";
 
@@ -396,8 +406,8 @@ function applyLang(lang) {
             ? entry.fr[i]
             : entry.fr
           : Array.isArray(entry._en)
-          ? entry._en[i]
-          : entry._en;
+            ? entry._en[i]
+            : entry._en;
       if (val != null) el.innerHTML = val;
     });
   });
@@ -408,7 +418,7 @@ function applyLang(lang) {
     email.placeholder =
       lang === "fr" ? "entrez votre e-mail" : email.dataset.enPlaceholder || "";
   }
-  
+
   const emailModal = document.querySelector(".popup-modal__input");
   if (emailModal) {
     emailModal.placeholder =
