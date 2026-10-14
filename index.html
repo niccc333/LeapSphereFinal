@@ -1,336 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LeapSphere</title>
-  <meta name="description"
-    content="LeapSphere handles your marketing from strategy to publishing, so you stay focused on running your business." />
-  <link rel="icon" type="image/svg+xml" href="new%20brand%20assets/LeapSphere%20Icon%20Dark.svg?v=2" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap"
-    rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
-  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>document.documentElement.classList.add('js')</script>
+  <title>LeapSphere | Marketing Intelligence for Expertise-Based Businesses</title>
+  <meta name="description" content="LeapSphere runs the eleven functions of a marketing department, strategy, SEO, GEO, content, web, social, and follow-up, as one continuous system. Book a discovery call.">
+  <link rel="canonical" href="https://www.leapsphere.com/">
+  <meta name="theme-color" content="#F6F6EE">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="LeapSphere">
+  <meta property="og:title" content="LeapSphere | Marketing Intelligence for Expertise-Based Businesses">
+  <meta property="og:description" content="We do the work of a full marketing department, and help you convert. Book a discovery call.">
+  <meta property="og:url" content="https://www.leapsphere.com/">
+  <meta name="twitter:card" content="summary">
+
+  <link rel="icon" type="image/svg+xml" href="assets/leapsphere-icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="vendor/lenis.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "LeapSphere",
+    "url": "https://www.leapsphere.com",
+    "logo": "https://www.leapsphere.com/assets/logo.png",
+    "description": "LeapSphere is a marketing intelligence company that runs the eleven functions of a marketing department as one continuous system for expertise-based businesses.",
+    "sameAs": [
+      "https://www.linkedin.com/company/leapsphere",
+      "https://twitter.com/leapsphere"
+    ]
+  }
+  </script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "LeapSphere",
-    "url": "https://leapsphere.ai/",
-    "description": "LeapSphere handles your marketing from strategy to publishing, so you stay focused on running your business."
+    "url": "https://www.leapsphere.com/"
   }
   </script>
 </head>
+<body class="home">
+  <a class="skip-link" href="#main">Skip to content</a>
 
-<body>
-
-  <!-- ============================== NAVBAR ============================== -->
-  <header class="nav" id="nav" data-fade>
-    <a href="#top" class="nav__logo" aria-label="LeapSphere home">
-      <div style="position: relative; display: flex;">
-        <img src="new%20brand%20assets/LeapSphere%20Logo%20Dark.svg" alt="LeapSphere"
-          class="nav__icon nav__icon--dark" />
-        <img src="new%20brand%20assets/LeapSphere%20Logo%20White.svg" alt="LeapSphere"
-          class="nav__icon nav__icon--light" style="left: 0; top: 0;" />
-      </div>
+  <header class="nav" id="nav">
+    <div class="nav__glass" aria-hidden="true"></div>
+    <a class="nav__brand" href="./" aria-label="LeapSphere home">
+      <img src="assets/leapsphere-logo.svg" alt="LeapSphere" width="1106" height="185">
     </a>
-
-    <div class="nav__right">
-      <a href="#" class="btn btn--accent nav__cta js-modal-btn" id="navCta">Partner with LeapSphere</a>
-      <button class="nav__lang" type="button">fr</button>
-      <button class="nav__menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+    <div class="nav__actions">
+      <a class="nav__cta" href="#" data-cta-open>Book a Call</a>
+      <a class="nav__lang" href="fr/" hreflang="fr" lang="fr" aria-label="Français">fr</a>
+      <button class="nav__menu-btn" id="menu-btn" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
         <span></span><span></span><span></span>
       </button>
     </div>
-    <!-- Dropdown menu overlay -->
-    <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
-      <nav class="menu-overlay__links">
-        <a href="#top" class="menu-link">Home</a>
-        <a href="about.html" class="menu-link">About Us</a>
-        <a href="features.html" class="menu-link">Features</a>
-        <a href="wip.html" class="menu-link">Whitepapers</a>
-        <a href="wip.html" class="menu-link">FAQ</a>
-      </nav>
-    </div>
+    <nav class="menu" id="menu" aria-label="Main" hidden>
+      <ul>
+        <li><a href="./" aria-current="page">Home</a></li>
+        <li><a href="why-us/">Why Us</a></li>
+        <li><a href="how-we-work/">How We Work</a></li>
+        <li><a href="faq/">FAQ</a></li>
+        <li><a class="menu__cta" href="#" data-cta-open>Book a Discovery Call</a></li>
+      </ul>
+    </nav>
   </header>
 
-  <main id="top">
+  <main id="main">
+    <section class="hero">
+      <div class="container hero__inner">
+        <h1 class="hero__title" id="hero-title"><span id="hero-prefix">Intelligence based marketing that</span><br><span id="hero-prefix2">brings you the </span><span class="hero__cycle" id="hero-cycle">right</span><span class="hero__caret" aria-hidden="true"></span> clients</h1>
+        <p class="hero__sub reveal">We do the work of a full marketing department, and help you convert</p>
+        <a class="btn btn--glow reveal" href="#" data-cta-open>Book a Discovery Call</a>
+      </div>
+    </section>
 
-    <!-- ===================== HERO (light -> dark morph) ===================== -->
-    <section class="hero" id="hero">
-      <div class="hero__pin">
-
-        <!-- LIGHT layer -->
-        <div class="hero__layer hero__layer--light" data-hero="light">
-          <div class="hero__inner">
-            <h1 class="hero__title" id="heroTitle" aria-label="Be the name people think of first"></h1>
-            <p class="hero__sub" data-fade>Stop wasting hours on marketing that goes nowhere. We handle your
-              content, from strategy to publishing. You stay focused on running your business.</p>
-            <a href="#" class="btn btn--accent hero__btn js-modal-btn" data-fade>Partner with LeapSphere</a>
-          </div>
-          <div class="scroll-mouse" data-fade></div>
-          <div class="hero__glow"></div>
+    <section class="adam" aria-labelledby="adam-title">
+      <div class="container adam__inner">
+        <div class="adam__intro reveal">
+          <p class="adam__eyebrow">Introducing</p>
+          <h2 id="adam-title" class="adam__title">ADAM</h2>
         </div>
-
-        <!-- DARK layer -->
-        <div class="hero__layer hero__layer--dark" data-hero="dark" aria-hidden="true">
-          <div class="hero__inner hero__inner--dark">
-            <div class="hero__col">
-              <h2 class="hero__title hero__title--dark">Great products &amp; services deserve to be seen</h2>
-              <p class="hero__sub hero__sub--dark">Let LeapSphere take care of your marketing stack.<br />Yes, the whole
-                thing.</p>
-              <div class="hero__actions">
-                <a href="#comparison" class="btn btn--ghost">see use cases</a>
-                <a href="features.html" class="btn btn--ghost btn--ghost-accent">see features</a>
-              </div>
-            </div>
-            <div class="hero__care">
-              <p class="hero__care-label">We take care of:</p>
-              <ul class="hero__care-list">
-                <li>SEO management</li>
-                <li>Blog &amp; article writing</li>
-                <li>Social media management</li>
-                <li>Lead magnets</li>
-                <li>Full Stack CRM</li>
-                <li>Competitor intelligence</li>
-                <li>Reporting &amp; analytics</li>
-              </ul>
-            </div>
-          </div>
-          <div class="hero__glow"></div>
+        <div class="adam__body">
+          <p class="adam__block reveal">ADAM finds the <strong>right kind of traffic:</strong> people with transactional intent that are looking to <strong>buy now</strong>.</p>
+          <p class="adam__block reveal">The system makes the firm visible to <strong>that traffic</strong> (including AI answers).</p>
+          <p class="adam__block reveal">Behind that, it runs the whole marketing department in one continuous loop:</p>
+          <ul class="adam__list bullets reveal">
+            <li>market research</li>
+            <li>content</li>
+            <li>site</li>
+            <li>social</li>
+            <li>email</li>
+            <li>CRM</li>
+          </ul>
+          <p class="adam__block reveal"></p>
         </div>
       </div>
     </section>
 
-    <!-- ===================== HORIZONTAL SCROLL ===================== -->
-    <section class="horizontal" id="horizontal" data-theme="dark">
-      <div class="horizontal__track" id="hTrack">
-        <div class="h-panel h-panel--intro">
-          <h2 class="h-panel__heading">You took the leap to focus on your expertise</h2>
-          <p class="h-panel__lead">You are excellent at what you do.<br />Your clients need your attention.</p>
-          <p class="h-panel__lead">But right now, you are spending unpaid hours trying to stay
-            visible online, and it is pulling you away from your real work.</p>
+    <section class="loss" aria-labelledby="loss-title">
+      <div class="container">
+        <div class="loss__bar reveal">
+          <h2 id="loss-title" class="loss__title"><span id="loss-text">people search differently now</span><span class="loss__caret" aria-hidden="true"></span></h2>
+          <span class="loss__search" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <circle cx="11" cy="11" r="7"></circle>
+             <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+            </svg>
+          </span>
         </div>
-
-        <div class="h-cards-wrapper">
-          <article class="h-card card-hover">
-            <h3 class="h-card__title">The Time Drain</h3>
-            <span class="h-card__rule"></span>
-            <p class="h-card__body">You spend evening hours staring at a blank screen, writing posts, and managing
-              platforms when you should be resting or serving clients.</p>
-          </article>
-
-          <article class="h-card card-hover">
-            <h3 class="h-card__title">The Silence</h3>
-            <span class="h-card__rule"></span>
-            <p class="h-card__body">You put real effort into posting, but nothing happens. Visibility stays low because
-              random, scattered posts do not build steady authority.</p>
-          </article>
-
-          <article class="h-card card-hover">
-            <h3 class="h-card__title">The Agency Bill</h3>
-            <span class="h-card__rule"></span>
-            <p class="h-card__body">You pay high monthly retainers for agencies that move slowly, require endless
-              meetings, and still sound like someone else wrote your copy.</p>
-          </article>
+        <ul class="loss__list reveal">
+          <li class="loss__stat"><span class="loss__spark" aria-hidden="true">&#10022;</span><strong>51% of buyers ask AI</strong> before looking for options.</li>
+          <li class="loss__soft">If you're not showing up in these answers, you're losing potential deals without knowing.</li>
+        </ul>
+        <div class="loss__source reveal">
+          <a class="source-pill" href="https://learn.g2.com/g2-2026-ai-search-insight-report?utm_source=newswire&amp;utm_medium=pr&amp;utm_campaign=q1fy27-ai-search-insight-report" target="_blank" rel="noopener noreferrer">Source: G2 2026 AI Report</a>
         </div>
       </div>
     </section>
 
-    <!-- ===================== VISIBILITY (bright) ===================== -->
-    <section class="visibility" id="visibility" data-theme="light">
-      <div class="visibility__glow"></div>
-      <h2 class="visibility__title" data-reveal>
-        <span>More visibility.</span>
-        <span>Less cost.</span>
-        <span>Zero time wasted.</span>
-      </h2>
-      <p class="visibility__body" data-reveal>You are excellent at what you do. Now let's make sure your market knows
-        it.<br />
-        Empower your marketing operation today and get your time back.</p>
-    </section>
+    <section class="services" aria-labelledby="services-title">
+      <div class="container">
+        <div class="services__head reveal">
+          <h2 id="services-title">That's Where ADAM comes In</h2>
 
-    <!-- ===================== OPERATION ===================== -->
-    <section class="operation" id="operation" data-theme="light">
-      <h2 class="operation__title" data-reveal>We run the entire operation so you don't have to.</h2>
-      <div class="operation__rows">
-        <div class="op-row card-hover" data-reveal>
-          <h3 class="op-row__name">Search &amp; Local<br />Visibility</h3>
-          <div class="op-row__text">
-            <p>When potential clients search for an expert in your area, they find you.</p>
-            <p>We make sure your name shows up first, clearly and steadily.</p>
+          <p>ADAM builds <strong>organic brands</strong> that earn trust before a buyer ever calls.</p>
+          <p>Built for businesses whose reputation is product or service.</p>
+          <div class="services__controls">
+            <a class="btn services__tab" href="how-we-work/">How We Work</a>
+            <div class="services__arrows">
+              <button type="button" class="services__arrow" data-dir="-1" aria-label="Previous services" aria-controls="services-track">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 5 8 12 15 19"></polyline></svg>
+              </button>
+              <button type="button" class="services__arrow" data-dir="1" aria-label="Next services" aria-controls="services-track">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 5 16 12 9 19"></polyline></svg>
+              </button>
+            </div>
           </div>
         </div>
-        <div class="op-row card-hover" data-reveal>
-          <h3 class="op-row__name">Content Creation<br />&amp; Posting</h3>
-          <div class="op-row__text">
-            <p>Your brand stays active with thoughtful, well-written posts that actually sound like you.</p>
-            <p>We write, review, and publish across your channels so your audience sees a steady presence every week.
-            </p>
-          </div>
-        </div>
-        <div class="op-row card-hover" data-reveal>
-          <h3 class="op-row__name">Market<br />Monitoring</h3>
-          <div class="op-row__text">
-            <p>We keep an eye on your market and adjust your content so your brand always stands out as the clear
-              leader.</p>
-            <p>Never worry about competitors again.</p>
-          </div>
-        </div>
-      </div>
-      <div style="text-align:center; margin-top:80px;" data-reveal>
-        <a href="features.html" class="btn btn--ghost btn--ghost-accent op-btn">See All Features</a>
-      </div>
-    </section>
-
-    <!-- ===================== COMPARISON ===================== -->
-    <section class="comparison" id="comparison" data-theme="light">
-      <h2 class="comparison__title" data-reveal>Best Alternative Available</h2>
-      <div class="comparison__grid">
-        <article class="compare-card card-hover" data-reveal>
-          <h3 class="compare-card__head">Internal Team</h3>
-          <span class="compare-card__rule"></span>
-          <div class="compare-card__body">
-            <div class="compare-item">
-              <p class="compare-item__title">Price:</p>
-              <p>A full team’s worth of salaries, benefits, and overhead</p>
-            </div>
-            <div class="compare-item">
-              <p class="compare-item__title">Insight:</p>
-              <p>Limited to what your team can track and analyze in-house</p>
-            </div>
-            <div class="compare-item">
-              <p class="compare-item__title">Time saved:</p>
-              <p>None, you’re now managing an entire team</p>
-            </div>
-            <div class="compare-item">
-              <p class="compare-item__title">Consistency:</p>
-              <p>Tied to your team's workload and bandwidth</p>
-            </div>
-            <div class="compare-item">
-              <p class="compare-item__title">Reliability:</p>
-              <p>Any one of them can leave, taking knowledge with them</p>
-            </div>
-          </div>
+        <div class="services__track reveal" id="services-track" tabindex="0" role="region" aria-label="LeapSphere services">
+        <article class="service-card">
+          <h3>AI Visibility</h3>
+          <span class="service-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 100 100" fill="none" stroke="currentColor">
+              <circle cx="50" cy="50" r="38" stroke-width="1.5"></circle>
+              <path d="M42 27 46 41 60 45 46 49 42 63 38 49 24 45 38 41Z" stroke-width="1.6" stroke-linejoin="round"></path>
+              <path d="M65 38 67 45 74 47 67 49 65 56 63 49 56 47 63 45Z" stroke-width="1.4" stroke-linejoin="round"></path>
+            </svg>
+          </span>
+          <p>AI cites you as a source, endorsing you in your brand voice.</p>
         </article>
-
-        <article class="compare-card card-hover" data-reveal>
-          <h3 class="compare-card__head">Agency</h3>
-          <span class="compare-card__rule"></span>
-          <div class="compare-card__body">
-            <div class="compare-item">
-              <p class="compare-item__title">Price:</p>
-              <p>Expensive retainer fees, month after month</p>
-            </div>
-            <div class="compare-item">
-              <p class="compare-item__title">Insight:</p>
-              <p>The same playbook applied across every client</p>
-            </div>
-            <div class="compare-item">
-              <p class="compare-item__title">Time saved:</p>
-              <p>Some, but you're still managing the relationship</p>
-            </div>
-            <div class="compare-item">
-              <p class="compare-item__title">Consistency:</p>
-              <p>Bursts of activity around campaigns, then quiet</p>
-            </div>
-            <div class="compare-item">
-              <p class="compare-item__title">Reliability:</p>
-              <p>Your contact changes, your strategy resets</p>
-            </div>
-          </div>
+        <article class="service-card">
+          <h3>Website</h3>
+          <span class="service-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 100 100" fill="none" stroke="currentColor">
+              <circle cx="50" cy="50" r="38" stroke-width="1.5"></circle>
+              <rect x="29" y="34" width="42" height="32" rx="4" stroke-width="1.6"></rect>
+              <line x1="29" y1="43" x2="71" y2="43" stroke-width="1.6"></line>
+            </svg>
+          </span>
+          <p>We take care of your website, it looks the same, but ranks better.</p>
         </article>
-
-        <article class="compare-card compare-card--accent card-hover" data-reveal>
-          <h3 class="compare-card__head">LeapSphere</h3>
-          <span class="compare-card__rule"></span>
-          <div class="compare-card__body">
-            <div class="compare-item">
-              <p class="compare-item__title">Price:</p>
-              <p>A fraction of the cost, for everything above and more</p>
-            </div>
-            <div class="compare-item">
-              <p class="compare-item__title">Insight:</p>
-              <p>A specialized engine built for your industry, checked by a real expert every time</p>
-            </div>
-            <div class="compare-item">
-              <p class="compare-item__title">Time saved:</p>
-              <p>85–100 hours a week, handled for you</p>
-            </div>
-            <div class="compare-item">
-              <p class="compare-item__title">Consistency:</p>
-              <p>Runs 24/7, the system keeps everything consistent, always</p>
-            </div>
-            <div class="compare-item">
-              <p class="compare-item__title">Reliability:</p>
-              <p>No turnover. Nothing to relearn, ever</p>
-            </div>
-          </div>
+        <article class="service-card">
+          <h3>Search Engine Optimization</h3>
+          <span class="service-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 100 100" fill="none" stroke="currentColor">
+              <circle cx="50" cy="50" r="38" stroke-width="1.5"></circle>
+              <circle cx="47" cy="48" r="13" stroke-width="1.8"></circle>
+              <line x1="57" y1="58" x2="67" y2="68" stroke-width="1.8" stroke-linecap="round"></line>
+            </svg>
+          </span>
+          <p>Your website appears to the right customers without the need for ads.</p>
+        </article>
+        <article class="service-card">
+          <h3>Content Management</h3>
+          <span class="service-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 100 100" fill="none" stroke="currentColor">
+              <circle cx="50" cy="50" r="38" stroke-width="1.5"></circle>
+              <circle cx="50" cy="42" r="10" stroke-width="1.6"></circle>
+              <path d="M31 69a19 15 0 0 1 38 0" stroke-width="1.6" stroke-linecap="round"></path>
+            </svg>
+          </span>
+          <p>Built to get cited by AI when people ask questions about your industry.</p>
+        </article>
+        <article class="service-card">
+          <h3>Market Monitoring</h3>
+          <span class="service-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 100 100" fill="none" stroke="currentColor">
+              <circle cx="50" cy="50" r="38" stroke-width="1.5"></circle>
+              <circle cx="50" cy="50" r="22" stroke-width="1.4" stroke-dasharray="7 7"></circle>
+              <circle cx="50" cy="50" r="3.5" fill="currentColor" stroke="none"></circle>
+              <circle cx="62" cy="41" r="2.5" fill="currentColor" stroke="none" opacity="0.9"></circle>
+              <circle cx="41" cy="61" r="2.5" fill="currentColor" stroke="none" opacity="0.9"></circle>
+            </svg>
+          </span>
+          <p>Competitors, demand, gaps identified and acted on.</p>
+        </article>
+        <article class="service-card">
+          <h3>Lead Generation &amp; Qualification</h3>
+          <span class="service-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 100 100" fill="none" stroke="currentColor">
+              <circle cx="50" cy="50" r="38" stroke-width="1.5"></circle>
+              <circle cx="41" cy="41" r="9" stroke-width="1.6"></circle>
+              <path d="M26 67a15 12 0 0 1 30 0" stroke-width="1.6" stroke-linecap="round"></path>
+              <rect x="60" y="38" width="15" height="3" rx="1.5" fill="currentColor" stroke="none"></rect>
+              <rect x="60" y="46" width="15" height="3" rx="1.5" fill="currentColor" stroke="none"></rect>
+              <rect x="60" y="54" width="10" height="3" rx="1.5" fill="currentColor" stroke="none"></rect>
+            </svg>
+          </span>
+          <p>Leads are qualified before being sent in.</p>
+        </article>
+        <article class="service-card">
+          <h3>Measures &amp; Corrects</h3>
+          <span class="service-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 100 100" fill="none" stroke="currentColor">
+              <circle cx="50" cy="50" r="38" stroke-width="1.5"></circle>
+              <path d="M50 32a18 18 0 1 0 18 18" stroke-width="1.8" stroke-linecap="round"></path>
+              <path d="M43 27 54 32 45 39Z" fill="currentColor" stroke="none"></path>
+            </svg>
+          </span>
+          <p>What works gets extended. The strategy moves on evidence.</p>
         </article>
       </div>
+      </div>
     </section>
 
-
-
-    <!-- ===================== CTA + FOOTER ===================== -->
-    <footer class="footer" id="cta" data-theme="light">
-      <div class="footer__cta">
-        <h2 class="footer__title" data-reveal>Ready to become the first name people think of?</h2>
-        <p class="footer__sub" data-reveal>You are excellent at what you do. Now let's make sure your market knows
-          it.<br />
-          Empower your marketing operation today and get your time back.</p>
-        <form class="footer__form" data-reveal action="https://formspree.io/f/mwvgwakp" method="POST">
-          <input type="email" name="email" class="footer__input" placeholder="enter your email"
-            aria-label="Email address" required />
-          <button type="submit" class="btn btn--accent">Partner with LeapSphere</button>
-        </form>
+    <section class="block options" aria-labelledby="options">
+      <div class="container">
+        <h2 id="options" class="center reveal">Why The Usual Options Fall Short</h2>
+        <div class="options-list">
+          <span class="options-line" aria-hidden="true"></span>
+          <div class="options-row">
+            <h3 class="options-row__title">Internal Hire</h3>
+            <div class="options-row__body">
+              <p>One person can't own SEO, content, web, social, and follow-up.</p>
+              <p>Covering it properly is a department's worth of headcount.</p>
+              <p>A cost most growing companies can't justify yet.</p>
+            </div>
+          </div>
+          <div class="options-row">
+            <h3 class="options-row__title">Traditional Agencies</h3>
+            <div class="options-row__body">
+              <p>Senior team pitches you, but...</p>
+              <p>The junior team runs the one-size-fits-all Generic playbook.</p>
+              <p>A retainer that returns a fraction of its cost.</p>
+            </div>
+          </div>
+          <div class="options-row">
+            <h3 class="options-row__title"><img class="options-row__icon" src="assets/leapsphere-icon.svg" alt="" width="221" height="214"><strong>ADAM</strong></h3>
+            <div class="options-row__body">
+              <p>Hire the <strong>whole department</strong>.</p>
+              <p>Our team analyzes where you should show up.</p>
+              <p>The system makes sure you stay there.</p>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div class="footer__bottom">
-        <a href="#top" class="footer__logo" aria-label="LeapSphere home">
-          <img src="new%20brand%20assets/LeapSphere%20Logo%20Dark.svg" alt="LeapSphere" />
-        </a>
-        <nav class="footer__links">
-          <a href="#top">Home</a>
-          <a href="about.html">About Us</a>
-          <a href="features.html">Features</a>
-          <a href="wip.html">Whitepapers</a>
-          <a href="wip.html">FAQ</a>
-        </nav>
-      </div>
-
-      <div class="footer__legal">
-        <a href="#">Privacy</a>
-        <a href="#">Manage cookies</a>
-        <a href="#">Terms</a>
-      </div>
-    </footer>
-
+    </section>
   </main>
 
-  <!-- ============================== POPUP MODAL ============================== -->
-  <div class="popup-modal" id="contactModal" aria-hidden="true">
-    <div class="popup-modal__overlay" id="contactModalOverlay"></div>
-    <div class="popup-modal__content">
-      <button class="popup-modal__close" id="contactModalClose" aria-label="Close modal">&times;</button>
-      <form class="popup-modal__form" action="https://formspree.io/f/mwvgwakp" method="POST">
-        <h3 class="popup-modal__title">Partner with LeapSphere</h3>
-        <input type="email" name="email" class="popup-modal__input" placeholder="enter your email"
-          aria-label="Email address" required />
-        <button type="submit" class="btn btn--accent popup-modal__submit">Submit</button>
-      </form>
+  <div class="page-end">
+    <section class="stand cta-final" aria-labelledby="cta-title">
+      <div class="container center">
+        <h2 id="cta-title" class="stand__title reveal">Ready to become the first name people think of?</h2>
+        <p class="stand__lead reveal">You are excellent at what you do. Now let's make sure your market knows it.<br>Empower your marketing operation today and get your time back.</p>
+        <form class="cta-form reveal" action="" method="post">
+          <label class="visually-hidden" for="cta-email">Email address</label>
+          <input class="cta-form__input" id="cta-email" type="email" name="email" placeholder="enter your email" autocomplete="email" required>
+          <button class="cta-form__button" type="submit">Book a Discovery Call</button>
+        </form>
+      </div>
+    </section>
+
+    <footer class="footer">
+    <div class="container footer__inner">
+      <nav class="footer__nav" aria-label="Footer">
+        <ul>
+          <li><a href="./">Home</a></li>
+          <li><a href="why-us/">Why Us</a></li>
+          <li><a href="how-we-work/">How We Work</a></li>
+          <li><a href="faq/">FAQ</a></li>
+        </ul>
+      </nav>
+      <img class="footer__logo" src="assets/leapsphere-logo.svg" alt="LeapSphere" width="1106" height="185" loading="lazy">
+      <ul class="footer__legal">
+        <li><a href="privacy/">Privacy</a></li>
+        <li><a href="privacy/#cookies">Manage Cookies</a></li>
+        <li><a href="terms/">Terms</a></li>
+      </ul>
     </div>
+  </footer>
   </div>
 
-  <!-- ============================== SCRIPTS ============================== -->
-  <script src="vendor/lenis.min.js"></script>
   <script src="GSAP/dist/gsap.min.js"></script>
   <script src="GSAP/dist/ScrollTrigger.min.js"></script>
   <script src="GSAP/dist/TextPlugin.min.js"></script>
+  <script src="vendor/lenis.min.js"></script>
   <script src="js/main.js"></script>
 </body>
-
 </html>

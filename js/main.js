@@ -1,469 +1,459 @@
-/* ============================================================
-   LeapSphere — interactions
-   Lenis smooth scroll + GSAP (typing, hero morph, horizontal, reveals)
-   ============================================================ */
-gsap.registerPlugin(ScrollTrigger, TextPlugin);
+(() => {
+  const root = document.documentElement;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const nav = document.getElementById('nav');
+  let lenis = null;
 
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // reCAPTCHA v3 (public site key).
+  const RECAPTCHA_SITE_KEY = '6LcA--stAAAAAOlO7rUGPXRGFtpC5zwwVLiCXly5';
+  let recaptchaPromise = null;
 
-/* ---------------------------------------------------------------
-   1. LENIS SMOOTH SCROLL  — starts 0.3s after the site loads
---------------------------------------------------------------- */
-let lenis;
-function startLenis() {
-  lenis = new Lenis({
-    duration: 1.15,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smoothWheel: true,
-    lerp: 0.09,
-  });
+  // Formspree endpoint shared by the popup and the inline footer form.
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mbgdapyj';
 
-  lenis.on("scroll", ScrollTrigger.update);
-  gsap.ticker.add((time) => lenis.raf(time * 1000));
-  gsap.ticker.lagSmoothing(0);
+  // reCAPTCHA rejects unlisted domains (e.g. localhost), so skip it in local dev.
+  const isLocalDev = /^(localhost|127\.0\.0\.1|\[::1\]|0\.0\.0\.0)$/.test(location.hostname);
 
-  // anchor links use Lenis for buttery jumps
-  document.querySelectorAll('a[href^="#"]').forEach((a) => {
-    a.addEventListener("click", (e) => {
-      const target = document.querySelector(a.getAttribute("href"));
-      if (!target) return;
-      e.preventDefault();
-      closeMenu();
-      lenis.scrollTo(target, { offset: 0, duration: 1.4 });
-    });
-  });
-}
+  initMenu();
+  initCtaModal();
+  initFooterForms();
+  initCarousels();
+  placeOptionsLine();
 
-/* ---------------------------------------------------------------
-   2. HERO — typing title, then fade everything else in
---------------------------------------------------------------- */
-function playHero() {
-  const titleEl = document.getElementById("heroTitle");
-  const fadeEls = document.querySelectorAll("[data-fade]");
-  const phrase = HERO_TITLE[currentLang];
-
-  if (reduceMotion) {
-    titleEl.textContent = phrase;
-    titleEl.classList.add("is-typed");
-    gsap.set(fadeEls, { opacity: 1 });
+  const hasGsap = window.gsap && window.ScrollTrigger;
+  if (!hasGsap) {
+    root.classList.remove('js');
+    trackNav(() => window.scrollY);
     return;
   }
 
-  const tl = gsap.timeline();
+  gsap.registerPlugin(ScrollTrigger);
 
-  // "type" the title in
-  tl.to(titleEl, {
-    duration: 1.7,
-    text: { value: phrase, delimiter: "" },
-    ease: "none",
-  });
+  if (!reducedMotion && window.Lenis) {
+    lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+  }
+  trackNav(() => window.scrollY, lenis);
 
-  // caret off once typed
-  tl.add(() => titleEl.classList.add("is-typed"));
+  if (reducedMotion) {
+    root.classList.remove('js');
+    return;
+  }
 
-  // everything else (navbar, subtext, button) 0 -> 100 opacity
-  tl.to(
-    fadeEls,
-    { opacity: 1, duration: 1.0, stagger: 0.12, ease: "power2.out" },
-    "+=0.1"
-  );
-}
-
-/* ---------------------------------------------------------------
-   3. HERO MORPH — light fades/blurs into the dark version.
-      No page scroll happens visually: the section is pinned and
-      the crossfade is scrubbed by scroll. (Only this section.)
---------------------------------------------------------------- */
-function heroMorph() {
-  const light = document.querySelector('[data-hero="light"]');
-  const dark = document.querySelector('[data-hero="dark"]');
-  const nav = document.getElementById("nav");
-  const navCta = document.getElementById("navCta");
-
-  if (reduceMotion) return;
-
-  const morph = gsap.timeline({
-    scrollTrigger: {
-      trigger: "#hero",
-      start: "top top",
-      end: "+=150%",
-      pin: ".hero__pin",
-      pinSpacing: true,
-      scrub: 0.6,
-      onUpdate: (self) => {
-        // total duration is 4, animation is 1. Halfway through animation is 0.5 / 4 = 0.125
-        const dark2 = self.progress > 0.125;
-        nav.classList.toggle("nav--dark", dark2);
-        navCta.classList.toggle("is-shown", dark2);
-        dark.style.pointerEvents = dark2 ? "auto" : "none";
-        light.style.pointerEvents = dark2 ? "none" : "auto";
-      },
-    },
-  });
-
-  morph
-    .to(light, { opacity: 0, filter: "blur(14px)", duration: 1, ease: "power1.inOut" }, 0)
-    .fromTo(
-      dark,
-      { opacity: 0, filter: "blur(14px)" },
-      { opacity: 1, filter: "blur(0px)", duration: 1, ease: "power1.inOut" },
-      0
-    )
-    .set({}, {}, "+=3"); // keep the dark section pinned for longer
-}
-
-/* ---------------------------------------------------------------
-   4. HORIZONTAL SCROLL section
---------------------------------------------------------------- */
-function horizontalScroll() {
-  const track = document.getElementById("hTrack");
-  if (!track || reduceMotion) return;
-
-  const getScrollAmount = () => {
-    const cards = track.querySelectorAll(".h-card");
-    const lastCard = cards[cards.length - 1];
-    const paddingRight = parseFloat(window.getComputedStyle(track).paddingRight) || 0;
-    // Calculate scroll so the center of the last card lands exactly in the middle of the screen
-    return track.scrollWidth - paddingRight - (lastCard.offsetWidth / 2) - (window.innerWidth / 2);
-  };
-
-  gsap.to(track, {
-    x: () => -getScrollAmount(),
-    ease: "none",
-    scrollTrigger: {
-      trigger: "#horizontal",
-      start: "top top",
-      end: () => "+=" + getScrollAmount(),
-      pin: true,
-      scrub: 1,
-      invalidateOnRefresh: true,
-    },
-  });
-}
-
-/* ---------------------------------------------------------------
-   5. SCROLL REVEALS — appear "the first time around"
---------------------------------------------------------------- */
-function reveals() {
-  if (reduceMotion) return;
-
-  gsap.utils.toArray("[data-reveal]").forEach((el) => {
-    gsap.to(el, {
+  ScrollTrigger.batch('.reveal', {
+    start: 'top 88%',
+    once: true,
+    onEnter: (els) => gsap.to(els, {
       opacity: 1,
       y: 0,
-      duration: 1,
-      ease: "power3.out",
-      scrollTrigger: { trigger: el, start: "top 85%", once: true },
-    });
+      duration: 1.1,
+      ease: 'power3.out',
+      stagger: 0.09,
+      overwrite: true,
+    }),
   });
 
-  // stagger the three lines of the visibility headline
-  const visLines = document.querySelectorAll(".visibility__title span");
-  if (visLines.length) {
-    gsap.from(visLines, {
-      opacity: 0,
-      y: 30,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: "power3.out",
-      scrollTrigger: { trigger: ".visibility__title", start: "top 80%", once: true },
+  gsap.fromTo('.practice__list', { '--line': 0 }, {
+    '--line': 1,
+    ease: 'none',
+    scrollTrigger: { trigger: '.practice__list', start: 'top 80%', end: 'bottom 55%', scrub: true },
+  });
+
+  initOptionsReveal();
+  initHeroTyping();
+  initLossTyping();
+
+  // Draws the options divider line as the section scrolls, and fades each row
+  // in once the line has passed that row's subtitle.
+  function initOptionsReveal() {
+    const section = document.querySelector('.options');
+    const list = document.querySelector('.options-list');
+    const line = document.querySelector('.options-line');
+    const rows = [...document.querySelectorAll('.options-row')];
+    if (!section || !list || !line || !rows.length) return;
+
+    gsap.set(rows, { opacity: 0, y: 25.9 });
+    line.style.setProperty('--opline', 0);
+
+    let fractions = [];
+    const measure = () => {
+      const listTop = list.getBoundingClientRect().top;
+      const height = list.offsetHeight || 1;
+      fractions = rows.map((row) => {
+        const title = row.querySelector('.options-row__title') || row;
+        const rect = title.getBoundingClientRect();
+        return Math.min(1, Math.max(0, (rect.top + rect.height / 2 - listTop) / height));
+      });
+    };
+
+    const apply = (progress) => {
+      line.style.setProperty('--opline', progress);
+      rows.forEach((row, i) => {
+        const shown = progress >= fractions[i];
+        const isShown = row.dataset.shown === '1';
+        if (shown && !isShown) {
+          row.dataset.shown = '1';
+          gsap.to(row, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' });
+        } else if (!shown && isShown) {
+          row.dataset.shown = '0';
+          gsap.to(row, { opacity: 0, y: 25.9, duration: 0.5, ease: 'power2.out' });
+        }
+      });
+    };
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: 'top 70%',
+      end: 'bottom 65%',
+      onRefresh: (self) => { measure(); apply(self.progress); },
+      onUpdate: (self) => apply(self.progress),
     });
   }
-}
 
-/* ---------------------------------------------------------------
-   6. MENU overlay
---------------------------------------------------------------- */
-const nav = document.getElementById("nav");
-const menuBtn = document.getElementById("menuBtn");
-const menuOverlay = document.getElementById("menuOverlay");
+  // Keeps the single options divider line aligned with the text column.
+  function placeOptionsLine() {
+    const list = document.querySelector('.options-list');
+    const line = document.querySelector('.options-line');
+    const body = document.querySelector('.options-row__body');
+    if (!list || !line || !body) return;
+    const place = () => {
+      line.style.left = `${body.getBoundingClientRect().left - list.getBoundingClientRect().left}px`;
+    };
+    place();
+    window.addEventListener('resize', place);
+  }
 
-function openMenu() {
-  nav.classList.add("is-open");
-  menuOverlay.classList.add("is-open");
-  menuOverlay.setAttribute("aria-hidden", "false");
-  menuBtn.setAttribute("aria-expanded", "true");
-}
-function closeMenu() {
-  nav.classList.remove("is-open");
-  menuOverlay.classList.remove("is-open");
-  menuOverlay.setAttribute("aria-hidden", "true");
-  menuBtn.setAttribute("aria-expanded", "false");
-}
-menuBtn.addEventListener("click", () => {
-  nav.classList.contains("is-open") ? closeMenu() : openMenu();
-});
-document.addEventListener("keydown", (e) => e.key === "Escape" && closeMenu());
+  function trackNav(getY, smooth) {
+    if (!nav) return;
+    const update = (y) => {
+      nav.classList.toggle('is-scrolled', y > 24);
+      nav.classList.toggle('is-past-hero', y > window.innerHeight);
+    };
+    if (smooth) smooth.on('scroll', (e) => update(e.scroll));
+    else window.addEventListener('scroll', () => update(getY()), { passive: true });
+    window.addEventListener('resize', () => update(getY()), { passive: true });
+    update(getY());
+  }
 
-/* ---------------------------------------------------------------
-   7. TESTIMONIAL videos — reveal placeholder only if a clip exists,
-      autoplay on hover
---------------------------------------------------------------- */
-function wireVideos() {
-  const section = document.getElementById("testimonials");
-  let hasValidVideo = false;
+  // Slides a horizontal card row when its arrow buttons are pressed.
+  function initCarousels() {
+    initCarousel(
+      document.getElementById('services-track'),
+      [...document.querySelectorAll('.services__arrows .services__arrow')],
+    );
+  }
 
-  document.querySelectorAll(".tframe").forEach((frame) => {
-    const video = frame.querySelector(".tframe__video");
-    if (!video) return;
+  function initCarousel(track, buttons) {
+    if (!track) return;
+    const cards = [...track.children];
+    if (!cards.length) return;
 
-    const onVideoReady = () => {
-      video.classList.add("is-loaded");
-      if (section && !hasValidVideo) {
-        hasValidVideo = true;
-        section.style.display = ""; // remove inline display: none
-        if (window.ScrollTrigger) ScrollTrigger.refresh();
+    const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+    const step = () => cards[0].getBoundingClientRect().width + gap;
+
+    const prevBtn = buttons.find((btn) => Number(btn.dataset.dir) === -1);
+    const nextBtn = buttons.find((btn) => Number(btn.dataset.dir) === 1);
+
+    const updateArrows = () => {
+      const max = track.scrollWidth - track.clientWidth;
+      if (prevBtn) prevBtn.disabled = track.scrollLeft <= 1;
+      if (nextBtn) nextBtn.disabled = track.scrollLeft >= max - 1;
+    };
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        track.scrollBy({
+          left: Number(btn.dataset.dir) * step(),
+          behavior: reducedMotion ? 'auto' : 'smooth',
+        });
+      });
+    });
+
+    track.addEventListener('scroll', updateArrows, { passive: true });
+    window.addEventListener('resize', updateArrows, { passive: true });
+    updateArrows();
+  }
+
+  function initMenu() {
+    const btn = document.getElementById('menu-btn');
+    const menu = document.getElementById('menu');
+    if (!btn || !menu) return;
+
+    const setOpen = (open) => {
+      btn.setAttribute('aria-expanded', String(open));
+      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      if (open) {
+        menu.hidden = false;
+        requestAnimationFrame(() => {
+          if (btn.getAttribute('aria-expanded') === 'true') menu.classList.add('is-open');
+        });
+      } else {
+        menu.classList.remove('is-open');
+        setTimeout(() => { if (!menu.classList.contains('is-open')) menu.hidden = true; }, 300);
       }
     };
 
-    if (video.readyState >= 1) {
-      onVideoReady();
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    if (canHover) {
+      let closeTimer;
+      const cancelClose = () => clearTimeout(closeTimer);
+      const scheduleClose = () => {
+        cancelClose();
+        closeTimer = setTimeout(() => setOpen(false), 180);
+      };
+      const openNow = () => { cancelClose(); setOpen(true); };
+
+      btn.addEventListener('mouseenter', openNow);
+      menu.addEventListener('mouseenter', cancelClose);
+      btn.addEventListener('mouseleave', scheduleClose);
+      menu.addEventListener('mouseleave', scheduleClose);
     } else {
-      video.addEventListener("loadeddata", onVideoReady);
+      btn.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
     }
-
-    frame.addEventListener("mouseenter", () => {
-      if (video.readyState >= 2) video.play().catch(() => { });
-    });
-    frame.addEventListener("mouseleave", () => video.pause());
-  });
-}
-
-/* ---------------------------------------------------------------
-   BOOT
---------------------------------------------------------------- */
-window.addEventListener("load", () => {
-  initI18n();          // capture English + wire the "fr" button
-  applyLang(currentLang); // restore persisted language (if any)
-  playHero();          // typing starts immediately (in the active language)
-  wireVideos();
-
-  // Lenis begins 0.3s after load (per spec)
-  setTimeout(startLenis, 300);
-
-  // scroll-driven pieces
-  heroMorph();
-  horizontalScroll();
-  reveals();
-  navColorLogic();
-
-  ScrollTrigger.refresh();
-});
-
-function navColorLogic() {
-  const sections = document.querySelectorAll("[data-theme]");
-  const nav = document.getElementById("nav");
-  if (!nav) return;
-
-  sections.forEach((sec) => {
-    const theme = sec.getAttribute("data-theme");
-    ScrollTrigger.create({
-      trigger: sec,
-      start: "top 84px",
-      end: "bottom 84px",
-      onEnter: () => {
-        if (theme === "dark") nav.classList.add("nav--dark");
-        else nav.classList.remove("nav--dark");
-      },
-      onEnterBack: () => {
-        if (theme === "dark") nav.classList.add("nav--dark");
-        else nav.classList.remove("nav--dark");
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        btn.focus();
       }
     });
-  });
-}
-
-/* ---------------------------------------------------------------
-   8. I18N — English / French toggle on the "fr" button
-   English is captured live from the DOM; French is defined below.
---------------------------------------------------------------- */
-const HERO_TITLE = {
-  en: "Be the name people think of first",
-  fr: "Soyez le nom auquel les gens pensent en premier",
-};
-
-const I18N = [
-  // buttons (three separate "Partner with LeapSphere")
-  { sel: ".nav__cta", fr: "Devenez partenaire de LeapSphere" },
-  { sel: ".hero__btn", fr: "Devenez partenaire de LeapSphere" },
-  { sel: ".footer__form .btn", fr: "Devenez partenaire de LeapSphere" },
-
-  // navigation / footer link lists
-  { sel: ".menu-overlay__links .menu-link", fr: ["Accueil", "À propos", "Fonctionnalités", "Livres blancs", "FAQ"] },
-  { sel: ".footer__links a", fr: ["Accueil", "À propos", "Fonctionnalités", "Livres blancs", "FAQ"] },
-
-  // hero (light)
-  { sel: ".hero__sub", fr: "Arrêtez de perdre des heures sur un marketing qui ne mène nulle part. Nous gérons votre contenu, de la stratégie à la publication. Vous restez concentré sur votre entreprise." },
-
-  // hero (dark)
-  { sel: ".hero__title--dark", fr: "Les bons produits et services méritent d’être vus" },
-  { sel: ".hero__sub--dark", fr: "Confiez toute votre stratégie marketing à LeapSphere.<br>Oui, l’intégralité." },
-  { sel: ".hero__actions .btn", fr: ["voir les cas d’usage", "voir les fonctionnalités"] },
-  { sel: ".hero__care-label", fr: "Nous nous occupons de :" },
-  { sel: ".hero__care-list li", fr: ["Gestion du SEO", "Rédaction d’articles et de blog", "Gestion des réseaux sociaux", "Aimants à prospects", "Gestion de Hubspot", "Veille concurrentielle", "Rapports et analyses"] },
-
-  // horizontal
-  { sel: ".h-panel__heading", fr: "Vous avez fait le saut pour vous concentrer sur votre expertise" },
-  {
-    sel: ".h-panel__lead", fr: [
-      "Vous êtes excellent dans votre domaine.<br>Vos clients ont besoin de votre attention.",
-      "Mais en ce moment, vous passez des heures non rémunérées à essayer de rester visible en ligne, et cela vous éloigne de votre vrai travail.",
-    ]
-  },
-  { sel: ".h-card__title", fr: ["Le gouffre temporel", "Le silence", "La facture d’agence"] },
-  {
-    sel: ".h-card__body", fr: [
-      "Vous passez vos soirées devant un écran vide, à rédiger des publications et à gérer des plateformes alors que vous devriez vous reposer ou servir vos clients.",
-      "Vous fournissez de réels efforts pour publier, mais rien ne se passe. La visibilité reste faible car des publications aléatoires et dispersées ne bâtissent pas une autorité durable.",
-      "Vous payez de lourds forfaits mensuels à des agences lentes, qui exigent des réunions interminables et donnent l’impression que quelqu’un d’autre a écrit vos textes.",
-    ]
-  },
-
-  // visibility
-  { sel: ".visibility__title span", fr: ["Plus de visibilité.", "Moins de coûts.", "Zéro temps perdu."] },
-  { sel: ".visibility__body", fr: "Vous êtes excellent dans votre domaine. Assurons-nous maintenant que votre marché le sache.<br>Renforcez votre opération marketing dès aujourd’hui et récupérez votre temps." },
-
-  // operation
-  { sel: ".operation__title", fr: "Nous gérons toute l’opération pour que vous n’ayez pas à le faire." },
-  { sel: ".op-row__name", fr: ["Visibilité locale<br>et recherche", "Création et<br>publication de contenu", "Veille du<br>marché"] },
-  {
-    sel: ".op-row__text", fr: [
-      "<p>Lorsque des clients potentiels recherchent un expert dans votre région, ils vous trouvent.</p><p>Nous veillons à ce que votre nom apparaisse en premier, clairement et régulièrement.</p>",
-      "<p>Votre marque reste active grâce à des publications soignées et bien rédigées qui vous ressemblent vraiment.</p><p>Nous rédigeons, révisons et publions sur vos canaux afin que votre audience voie une présence régulière chaque semaine.</p>",
-      "<p>Nous surveillons votre marché et ajustons votre contenu pour que votre marque se démarque toujours comme le leader incontesté.</p><p>Ne vous souciez plus jamais de la concurrence.</p>",
-    ]
-  },
-  { sel: ".op-btn", fr: "Voir toutes les fonctionnalités" },
-
-  // comparison
-  { sel: ".comparison__title", fr: "Meilleure alternative disponible" },
-  { sel: ".compare-card__head", fr: ["Équipe interne", "Agence", "LeapSphere"] },
-  {
-    sel: ".compare-item", fr: [
-      '<p class="compare-item__title">Délais variables :</p><p>Votre marketing tourne discrètement en arrière-plan pendant que vous vous concentrez sur vos clients</p>',
-      '<p class="compare-item__title">Qualité inconstante :</p><p>LeapSphere voit ce que veut votre public et adapte la stratégie de manière adéquate</p>',
-      '<p class="compare-item__title">Coûteux :</p><p>Vous bénéficiez de la portée d\'une équipe marketing complète pour une fraction du coût, sans les frais traditionnels.</p>',
-      '<p class="compare-item__title">Zéro heure perdue :</p><p>Votre marketing tourne discrètement en arrière-plan pendant que vous vous concentrez sur vos clients</p>',
-      '<p class="compare-item__title">L\'esthétique de la marque devient confuse :</p><p>Votre marque ne vous ressemble pas</p>',
-      '<p class="compare-item__title">Coûteux :</p><p>Vous payez plus de 8 000 $ par mois uniquement en honoraires</p>',
-      '<p class="compare-item__title">Zéro heure perdue :</p><p>Votre marketing tourne discrètement en arrière-plan pendant que vous vous concentrez sur vos clients</p>',
-      '<p class="compare-item__title">Autorité durable :</p><p>Vous maintenez une présence quotidienne claire et régulière. Votre marché pense à vous en premier.</p>',
-      '<p class="compare-item__title">Un coût juste :</p><p>Vous bénéficiez de la portée d\'une équipe marketing complète pour une fraction du coût, sans les frais traditionnels.</p>',
-    ]
-  },
-
-  // testimonials
-  { sel: ".testimonials__title", fr: "Témoignages d’autres experts" },
-  { sel: ".tframe__placeholder", fr: ["Développeur<br>front-end", "Développeur<br>d’entreprise", "Expert"] },
-
-  // modal
-  { sel: ".popup-modal__title", fr: "Devenez partenaire de LeapSphere" },
-  { sel: ".popup-modal__submit", fr: "Envoyer" },
-
-  // footer / CTA
-  { sel: ".footer__title", fr: "Prêt à devenir le premier nom auquel les gens pensent ?" },
-  { sel: ".footer__sub", fr: "Vous êtes excellent dans votre domaine. Assurons-nous maintenant que votre marché le sache.<br>Renforcez votre opération marketing dès aujourd’hui et récupérez votre temps." },
-  { sel: ".footer__legal a", fr: ["Confidentialité", "Gérer les cookies", "Conditions"] },
-];
-
-let currentLang = localStorage.getItem("ls-lang") === "fr" ? "fr" : "en";
-
-function initI18n() {
-  // capture the English content that's already in the DOM
-  I18N.forEach((entry) => {
-    const els = document.querySelectorAll(entry.sel);
-    entry._en = Array.isArray(entry.fr)
-      ? Array.from(els).map((el) => el.innerHTML)
-      : els.length
-        ? els[0].innerHTML
-        : null;
-  });
-
-  const email = document.querySelector(".footer__input");
-  if (email) email.dataset.enPlaceholder = email.getAttribute("placeholder") || "";
-
-  const emailModal = document.querySelector(".popup-modal__input");
-  if (emailModal) emailModal.dataset.enPlaceholder = emailModal.getAttribute("placeholder") || "";
-
-  const langBtn = document.querySelector(".nav__lang");
-  if (langBtn) {
-    langBtn.addEventListener("click", () =>
-      applyLang(currentLang === "fr" ? "en" : "fr")
-    );
-  }
-}
-
-function applyLang(lang) {
-  currentLang = lang;
-  document.documentElement.lang = lang;
-
-  I18N.forEach((entry) => {
-    const els = document.querySelectorAll(entry.sel);
-    els.forEach((el, i) => {
-      const val =
-        lang === "fr"
-          ? Array.isArray(entry.fr)
-            ? entry.fr[i]
-            : entry.fr
-          : Array.isArray(entry._en)
-            ? entry._en[i]
-            : entry._en;
-      if (val != null) el.innerHTML = val;
+    document.addEventListener('click', (e) => {
+      if (btn.getAttribute('aria-expanded') === 'true' && !nav.contains(e.target)) setOpen(false);
     });
-  });
-
-  // email placeholder (attribute, not content)
-  const email = document.querySelector(".footer__input");
-  if (email) {
-    email.placeholder =
-      lang === "fr" ? "entrez votre e-mail" : email.dataset.enPlaceholder || "";
   }
 
-  const emailModal = document.querySelector(".popup-modal__input");
-  if (emailModal) {
-    emailModal.placeholder =
-      lang === "fr" ? "entrez votre e-mail" : emailModal.dataset.enPlaceholder || "";
-  }
-
-  // hero title: only overwrite once it has finished typing (avoids clobbering the animation)
-  const titleEl = document.getElementById("heroTitle");
-  if (titleEl && titleEl.classList.contains("is-typed")) {
-    titleEl.textContent = HERO_TITLE[lang];
-  }
-
-  // toggle the button label to the language you can switch TO
-  const langBtn = document.querySelector(".nav__lang");
-  if (langBtn) langBtn.textContent = lang === "fr" ? "en" : "fr";
-
-  localStorage.setItem("ls-lang", lang);
-  if (window.ScrollTrigger) ScrollTrigger.refresh();
-}
-
-/* ---------------------------------------------------------------
-   9. POPUP MODAL
---------------------------------------------------------------- */
-const contactModal = document.getElementById("contactModal");
-const contactModalOverlay = document.getElementById("contactModalOverlay");
-const contactModalClose = document.getElementById("contactModalClose");
-const modalBtns = document.querySelectorAll(".js-modal-btn");
-
-function openModal(e) {
-  if (e) e.preventDefault();
-  contactModal.classList.add("is-open");
-  contactModal.setAttribute("aria-hidden", "false");
-}
-function closeModal() {
-  contactModal.classList.remove("is-open");
-  contactModal.setAttribute("aria-hidden", "true");
-}
-
-if (contactModal) {
-  modalBtns.forEach(btn => btn.addEventListener("click", openModal));
-  contactModalClose.addEventListener("click", closeModal);
-  contactModalOverlay.addEventListener("click", closeModal);
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && contactModal.classList.contains("is-open")) {
-      closeModal();
+  // Loads reCAPTCHA v3 once and resolves with the grecaptcha API.
+  function loadRecaptcha() {
+    if (window.grecaptcha && window.grecaptcha.execute) {
+      return new Promise((resolve) => window.grecaptcha.ready(() => resolve(window.grecaptcha)));
     }
-  });
-}
+    if (!recaptchaPromise) {
+      recaptchaPromise = new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://www.google.com/recaptcha/api.js?render=' + RECAPTCHA_SITE_KEY;
+        script.async = true;
+        script.defer = true;
+        script.onload = () => (window.grecaptcha
+          ? window.grecaptcha.ready(() => resolve(window.grecaptcha))
+          : reject(new Error('reCAPTCHA unavailable')));
+        script.onerror = () => reject(new Error('reCAPTCHA failed to load'));
+        document.head.appendChild(script);
+      });
+    }
+    return recaptchaPromise;
+  }
+
+  // Resolves with a fresh v3 token for the "submit" action (null in local dev).
+  function recaptchaToken() {
+    if (isLocalDev || !RECAPTCHA_SITE_KEY) return Promise.resolve(null);
+    return loadRecaptcha().then((gre) => gre.execute(RECAPTCHA_SITE_KEY, { action: 'submit' }));
+  }
+
+  // Posts a form to Formspree with a fresh reCAPTCHA token.
+  function postToFormspree(form) {
+    return recaptchaToken()
+      .catch(() => null)
+      .then((token) => {
+        const data = new FormData(form);
+        if (token) data.append('g-recaptcha-response', token);
+        return fetch(FORMSPREE_ENDPOINT, {
+          method: 'POST',
+          body: data,
+          headers: { Accept: 'application/json' },
+        });
+      })
+      .then((res) => {
+        if (res.ok) return;
+        return res.json()
+          .catch(() => ({}))
+          .then((data) => {
+            const msg = data && data.errors && data.errors[0] && data.errors[0].message;
+            throw new Error(msg || 'Submission failed. Please try again.');
+          });
+      });
+  }
+
+  // The inline footer form submits to Formspree directly (no popup).
+  function initFooterForms() {
+    document.querySelectorAll('.cta-form').forEach((form) => {
+      const button = form.querySelector('.cta-form__button');
+      const label = button ? button.textContent : '';
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!button || button.disabled) return;
+        if (FORMSPREE_ENDPOINT.indexOf('your-form-id') !== -1) {
+          console.warn('Set FORMSPREE_ENDPOINT in js/main.js to enable the footer form.');
+          return;
+        }
+        button.disabled = true;
+        button.textContent = 'Sending\u2026';
+        postToFormspree(form)
+          .then(() => {
+            form.reset();
+            button.textContent = 'Thanks!';
+          })
+          .catch((err) => {
+            console.error('Formspree error:', err);
+            button.textContent = 'Try again';
+          })
+          .finally(() => {
+            window.setTimeout(() => {
+              button.disabled = false;
+              button.textContent = label;
+            }, 2500);
+          });
+      });
+    });
+  }
+
+  // Every CTA (any [data-cta-open] trigger) opens one shared, blurred-backdrop
+  // dialog. The dialog form posts to Formspree.
+  function initCtaModal() {
+    const triggers = [...document.querySelectorAll('[data-cta-open]')];
+    if (!triggers.length) return;
+
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.id = 'cta-modal';
+    modal.hidden = true;
+    modal.innerHTML = `
+      <div class="modal__backdrop" data-modal-close></div>
+      <div class="modal__card" role="dialog" aria-modal="true" aria-labelledby="cta-modal-title">
+        <button class="modal__close" type="button" aria-label="Close" data-modal-close>&times;</button>
+        <h2 class="modal__title" id="cta-modal-title">Partner with LeapSphere</h2>
+        <div class="modal__body">
+          <!-- Endpoint is set via FORMSPREE_ENDPOINT in js/main.js -->
+          <form class="modal__form" action="${FORMSPREE_ENDPOINT}" method="POST">
+            <label class="visually-hidden" for="cta-modal-email">Email address</label>
+            <input class="modal__input" id="cta-modal-email" type="email" name="email" placeholder="enter your email" autocomplete="email" required>
+            <button class="modal__submit" type="submit">Submit</button>
+            <p class="modal__status" role="status" aria-live="polite" hidden></p>
+          </form>
+        </div>
+      </div>`;
+    document.body.appendChild(modal);
+
+    const card = modal.querySelector('.modal__card');
+    const form = modal.querySelector('.modal__form');
+    const status = modal.querySelector('.modal__status');
+    const submitBtn = modal.querySelector('.modal__submit');
+    let lastFocused = null;
+
+    const open = () => {
+      lastFocused = document.activeElement;
+      modal.hidden = false;
+      document.documentElement.classList.add('modal-open');
+      if (lenis) lenis.stop();
+      if (!isLocalDev) loadRecaptcha().catch(() => {});
+      const target = modal.querySelector('.modal__close');
+      if (target) target.focus();
+    };
+
+    const close = () => {
+      modal.hidden = true;
+      document.documentElement.classList.remove('modal-open');
+      if (lenis) lenis.start();
+      if (lastFocused && lastFocused.focus) lastFocused.focus();
+    };
+
+    triggers.forEach((el) => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        open();
+      });
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target.closest('[data-modal-close]')) close();
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // Endpoint not configured yet: keep the placeholder usable.
+      if (FORMSPREE_ENDPOINT.indexOf('your-form-id') !== -1) { close(); return; }
+
+      status.hidden = true;
+      status.classList.remove('is-error');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending\u2026'; }
+
+      postToFormspree(form)
+        .then(() => {
+          form.reset();
+          status.textContent = 'Thanks, we will be in touch shortly.';
+          status.hidden = false;
+          setTimeout(close, 1200);
+        })
+        .catch((err) => {
+          status.textContent = err.message || 'Something went wrong. Please try again.';
+          status.classList.add('is-error');
+          status.hidden = false;
+        })
+        .finally(() => {
+          if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Submit'; }
+        });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.hidden) close();
+    });
+
+    modal.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab' || modal.hidden) return;
+      const focusables = card.querySelectorAll('button, input, a[href]');
+      if (!focusables.length) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+  }
+
+  // Keeps retyping the adjective before "clients" every 4.5 seconds, cycling
+  // through the list below. The rest of the title is static, with no typing.
+  // The word is backspaced from its end, then the next one typed from its start.
+  function initHeroTyping() {
+    const cycleEl = document.getElementById('hero-cycle');
+    if (!cycleEl) return;
+
+    const phrases = ['right', 'paying', 'recurring', 'referring'];
+    let i = 0;
+
+    setInterval(() => {
+      const prev = phrases[i];
+      i = (i + 1) % phrases.length;
+      const next = phrases[i];
+      const state = { chars: prev.length };
+      gsap.timeline({ defaults: { ease: 'none' } })
+        .to(state, {
+          duration: 0.6,
+          chars: 0,
+          onUpdate: () => { cycleEl.textContent = prev.slice(0, Math.round(state.chars)); },
+        })
+        .to(state, {
+          duration: 1,
+          chars: next.length,
+          onUpdate: () => { cycleEl.textContent = next.slice(0, Math.round(state.chars)); },
+        });
+    }, 4500);
+  }
+
+  // Types out the loss section title once it scrolls into view.
+  function initLossTyping() {
+    const titleEl = document.getElementById('loss-text');
+    if (!titleEl || !gsap.plugins || !gsap.plugins.text) return;
+
+    const text = titleEl.textContent;
+    titleEl.textContent = '';
+
+    ScrollTrigger.create({
+      trigger: titleEl,
+      start: 'top 85%',
+      once: true,
+      onEnter: () => {
+        gsap.to(titleEl, { duration: Math.max(0.8, text.length * 0.06), text, ease: 'none' });
+      },
+    });
+  }
+})();
