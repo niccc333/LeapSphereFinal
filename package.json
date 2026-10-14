@@ -1,0 +1,16 @@
+{
+  "name": "leapsphere",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LeapSphere marketing site — static multi-page site served with Vite for local dev",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host --port 5173",
+    "build": "vite build",
+    "preview": "vite preview --host --port 4173"
+  },
+  "devDependencies": {
+    "vite": "^7.0.0",
+    "vite-plugin-static-copy": "^4.1.1"
+  }
+}
