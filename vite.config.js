@@ -40,6 +40,7 @@ export default defineConfig({
         'why-us': resolve(__dirname, 'why-us/index.html'),
         'how-we-work': resolve(__dirname, 'how-we-work/index.html'),
         faq: resolve(__dirname, 'faq/index.html'),
+        about: resolve(__dirname, 'about/index.html'),
         privacy: resolve(__dirname, 'privacy/index.html'),
         terms: resolve(__dirname, 'terms/index.html'),
         fr: resolve(__dirname, 'fr/index.html'),

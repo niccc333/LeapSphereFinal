@@ -7,17 +7,22 @@
   </url>
   <url>
     <loc>https://www.leapsphere.com/why-us/</loc>
-    <lastmod>2026-09-24</lastmod>
+    <lastmod>2026-10-14</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.leapsphere.com/how-we-work/</loc>
-    <lastmod>2026-09-24</lastmod>
+    <lastmod>2026-10-14</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.leapsphere.com/faq/</loc>
     <lastmod>2026-10-13</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.leapsphere.com/about/</loc>
+    <lastmod>2026-10-14</lastmod>
     <priority>0.7</priority>
   </url>
 </urlset>

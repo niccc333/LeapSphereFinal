@@ -286,15 +286,6 @@ em { font-style: italic; font-weight: 500; }
 }
 .hero__sub { margin-bottom: 2.376rem; font-size: clamp(1.08rem, 0.5vw + 0.972rem, 1.296rem); }
 
-.hero__caret {
-  display: inline-block;
-  width: 2.2px;
-  height: 0.85em;
-  margin-left: 3.2px;
-  background: currentColor;
-  vertical-align: -0.1em;
-  animation: hero-caret-blink 0.9s steps(1) infinite;
-}
 @keyframes hero-caret-blink { 50% { opacity: 0; } }
 
 .block { padding: clamp(86.4px, 14vh, 172.8px) 0; }
@@ -381,9 +372,50 @@ em { font-style: italic; font-weight: 500; }
 .practice__row dd { margin: 0; color: var(--text-soft); font-size: 1.026rem; }
 
 /* ---------- How we work ---------- */
-.steps { margin: 1.512rem 0 0; padding: 0; list-style: none; }
-.steps li { margin-bottom: 1.728rem; }
-.steps h3 { margin-bottom: 0.27rem; }
+.process {
+  margin: 0 0 2.376rem;
+  padding: 0;
+  list-style: none;
+  border-top: 1.1px solid rgba(var(--forest-rgb), 0.12);
+}
+.process-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 43.2px;
+  padding: 38.9px 32.4px;
+  border-bottom: 1.1px solid rgba(var(--forest-rgb), 0.12);
+}
+.process-row__title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+.process-row__body > p {
+  position: relative;
+  margin: 0 0 0.756rem;
+  padding-left: 1.75em;
+  color: var(--text-soft);
+}
+.process-row__body > p:last-child { margin-bottom: 0; }
+.process-row__body > p::before {
+  content: "\2014";
+  position: absolute;
+  left: 0;
+  color: var(--olive);
+}
+/* No divider between step 2 and the featured card. */
+.process-row:nth-last-child(2) { border-bottom: 0; }
+.process-row--featured {
+  margin-top: 1.08rem;
+  border: 0;
+  border-radius: 12px;
+  background: rgba(var(--moss-rgb), 0.2);
+}
+.process-row--featured .process-row__title { font-size: 1.62rem; }
+.process-row--featured .process-row__body > p { color: var(--text); }
+.process-row--featured .loop { justify-content: flex-start; margin: 0.432rem 0 1.08rem 1.75em; }
+.process-row--featured .loop li { background: var(--porcelain); }
 
 .loop {
   display: flex;
@@ -469,9 +501,6 @@ em { font-style: italic; font-weight: 500; }
 }
 
 /* ---------- Legal pages (Terms / Privacy) ---------- */
-.legal { padding-top: clamp(151.2px, 24vh, 248.4px); }
-.legal__head { margin-bottom: 2.376rem; }
-.legal h1 { font-size: clamp(2.052rem, 2.2vw + 1.08rem, 3.024rem); margin-bottom: 0.648rem; }
 .legal__date {
   display: inline-block;
   margin: 0;
@@ -537,6 +566,9 @@ em { font-style: italic; font-weight: 500; }
   .options-row__title { text-align: left; align-self: start; }
   .options-row__body { padding: 0; }
   .options-line { display: none; }
+
+  .process-row { grid-template-columns: 1fr; gap: 12.96px; padding: 25.9px 4.3px; }
+  .process-row--featured { padding: 25.9px 21.6px; }
 
   .adam__inner { grid-template-columns: 1fr; gap: 1.6rem; }
   .adam__body { max-width: none; }
@@ -689,7 +721,6 @@ em { font-style: italic; font-weight: 500; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
   .js .reveal { opacity: 1; transform: none; }
-  .hero__caret { display: none; }
 }
 .source-pill {
   display: inline-block;
@@ -1086,3 +1117,114 @@ html.modal-open { overflow: hidden; }
 }
 .modal__status.is-error { color: #A3342F; }
 
+
+/* ---------- Inner page titles ---------- */
+/* Shared size and title-to-body spacing for every page except home. */
+h1.page-title {
+  font-size: clamp(2.6rem, 3.6vw + 1rem, 4.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.3em;
+}
+
+/* Inner page hero: compact header at the top instead of a full-screen hero. */
+.hero--page {
+  display: block;
+  min-height: 0;
+  padding: clamp(86.4px, 14vh, 172.8px) 0 0;
+}
+/* Fainter, smaller version of the home hero glow, centred behind the title. */
+.hero--page::before {
+  z-index: -1;
+  bottom: -240px;
+  background: radial-gradient(min(760px, 92vw) 300px at 50% calc(clamp(86.4px, 14vh, 172.8px) + 90px),
+    rgba(var(--moss-rgb), 0.3) 0%,
+    rgba(var(--moss-rgb), 0.12) 38%,
+    rgba(var(--moss-rgb), 0) 70%);
+}
+.hero--page .hero__sub { margin-bottom: 0; }
+/* Content after an inner page header gets the same gap as the FAQ list. */
+.hero--page + .block { padding-top: clamp(86.4px, 14vh, 172.8px); }
+
+/* ---------- Why Us: what makes the work different ---------- */
+.diff__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(43.2px, 6vw, 108px);
+  align-items: start;
+}
+.diff-item + .diff-item { margin-top: clamp(38.9px, 5vh, 60.5px); }
+.diff-item__title {
+  margin: 0 0 0.54rem;
+  font-size: clamp(1.35rem, 0.8vw + 1.08rem, 1.62rem);
+  font-weight: 500;
+  line-height: 1.3;
+}
+.diff-item p { margin: 0; max-width: 34em; }
+
+/* Orbit stays in view while the points scroll past it. */
+.diff__visual {
+  position: sticky;
+  top: calc(50vh - min(21vw, 230px));
+}
+.orbit {
+  position: relative;
+  width: min(100%, 460px);
+  aspect-ratio: 1;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: radial-gradient(circle closest-side,
+    rgba(var(--moss-rgb), 0.55) 0%,
+    rgba(var(--moss-rgb), 0.3) 55%,
+    rgba(var(--moss-rgb), 0.12) 82%,
+    rgba(var(--moss-rgb), 0) 100%);
+}
+.orbit__ring,
+.orbit__track {
+  position: absolute;
+  border-radius: 50%;
+}
+.orbit__ring--outer { inset: 0; border: 1.1px solid rgba(var(--forest-rgb), 0.1); }
+.orbit__ring--path  { inset: 8.5%; border: 1.1px solid rgba(var(--forest-rgb), 0.85); }
+.orbit__ring--inner { inset: 16.5%; border: 1.1px solid rgba(var(--forest-rgb), 0.1); }
+
+.orbit__track {
+  inset: 8.5%;
+  transform: rotate(var(--start));
+  animation: orbit-spin var(--speed) linear infinite;
+}
+.orbit__track--a { --start: 40deg; --speed: 28s; }
+.orbit__track--b { --start: 235deg; --speed: 42s; }
+.orbit__dot {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.orbit__dot--lg {
+  width: 9%;
+  aspect-ratio: 1;
+  background: var(--moss);
+}
+.orbit__dot--sm {
+  width: 2%;
+  min-width: 6px;
+  aspect-ratio: 1;
+  background: var(--forest);
+}
+@keyframes orbit-spin {
+  from { transform: rotate(var(--start)); }
+  to   { transform: rotate(calc(var(--start) + 360deg)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .orbit__track { animation: none; }
+}
+@media (max-width: 760px) {
+  .diff__inner { grid-template-columns: 1fr; }
+  .diff__visual { position: static; order: -1; }
+  .orbit { width: min(72vw, 300px); }
+}
+
+/* Inner page header without the green glow (Why Us). */
+.hero--no-glow::before { content: none; }
