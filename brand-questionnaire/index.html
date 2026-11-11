@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>document.documentElement.classList.add('js')</script>
+  <title>Brand Questionnaire | LeapSphere</title>
+  <!-- Private client page: kept out of search results, the sitemap and site navigation.
+       Do not add it to robots.txt: a Disallow there would stop crawlers from seeing this noindex. -->
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" content="#F6F6EE">
+
+  <link rel="icon" type="image/svg+xml" href="../assets/leapsphere-icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../vendor/lenis.css">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="nav" id="nav">
+    <div class="nav__glass" aria-hidden="true"></div>
+    <a class="nav__brand" href="../" aria-label="LeapSphere home">
+      <img src="../assets/leapsphere-logo.svg" alt="LeapSphere" width="1106" height="185">
+    </a>
+  </header>
+
+  <main id="main">
+
+    <section class="hero hero--page">
+      <div class="container hero__inner">
+        <h1 class="hero__title page-title reveal">Brand Questionnaire</h1>
+        <p class="hero__sub reveal">Share a few details about your firm, competitors, and online presence. Takes about 5 minutes.</p>
+      </div>
+    </section>
+
+    <section class="block questionnaire" aria-label="Brand questionnaire">
+      <div class="container container--narrow">
+        <!-- Posts to the "Brand Questionnaire" form in Formspree. -->
+        <form class="questionnaire__form" id="brand-questionnaire" action="https://formspree.io/f/mzerbgpn" method="POST" novalidate>
+          <input type="hidden" name="_subject" value="New brand questionnaire">
+          <!-- Honeypot: hidden from people, bots that fill it are dropped by Formspree. -->
+          <div class="visually-hidden" aria-hidden="true">
+            <label for="bq-gotcha">Leave this field empty</label>
+            <input type="text" id="bq-gotcha" name="_gotcha" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="q-card reveal">
+            <label class="q-card__title" for="bq-company">What is your company name?<span class="q-required" aria-hidden="true">*</span></label>
+            <input class="q-input" id="bq-company" type="text" name="Company name" autocomplete="organization" placeholder="Your firm's name" required>
+          </div>
+
+          <div class="q-card reveal">
+            <label class="q-card__title" for="bq-website">Link to your website<span class="q-required" aria-hidden="true">*</span></label>
+            <input class="q-input" id="bq-website" type="text" name="Website" inputmode="url" autocomplete="url" placeholder="yourfirm.com" required>
+          </div>
+
+          <fieldset class="q-card reveal">
+            <legend class="q-card__title">Who do you consider your main competitors?</legend>
+            <div class="q-grid">
+              <div class="q-field">
+                <label class="q-label" for="bq-comp1">Competitor 1</label>
+                <input class="q-input" id="bq-comp1" type="text" name="Competitor 1" placeholder="Name or website">
+              </div>
+              <div class="q-field">
+                <label class="q-label" for="bq-comp2">Competitor 2</label>
+                <input class="q-input" id="bq-comp2" type="text" name="Competitor 2" placeholder="Name or website">
+              </div>
+              <div class="q-field">
+                <label class="q-label" for="bq-comp3">Competitor 3</label>
+                <input class="q-input" id="bq-comp3" type="text" name="Competitor 3" placeholder="Name or website">
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="q-card reveal">
+            <legend class="q-card__title">Who is your ideal client?</legend>
+            <label class="q-label" for="bq-client">Describe your ideal client</label>
+            <textarea class="q-input q-textarea" id="bq-client" name="Ideal client" rows="4" placeholder="Describe them however you like"></textarea>
+          </fieldset>
+
+          <fieldset class="q-card reveal">
+            <legend class="q-card__title">What is your main business goal?</legend>
+            <label class="q-label" for="bq-goal">What is your main business goal over the next 12 months?</label>
+            <textarea class="q-input q-textarea" id="bq-goal" name="12-month goal" rows="3" placeholder="For example: 10 new qualified inquiries a month by next summer." aria-describedby="bq-goal-hint"></textarea>
+            <p class="q-hint" id="bq-goal-hint">Be as specific as you can. A number and a timeframe is ideal.</p>
+          </fieldset>
+
+          <fieldset class="q-card reveal">
+            <legend class="q-card__title">Where can we find you online?</legend>
+            <label class="q-label" for="bq-platforms">Which platforms are you on today?</label>
+            <textarea class="q-input q-textarea" id="bq-platforms" name="Online platforms" rows="4" placeholder="LinkedIn: [link]&#10;Instagram: [link]&#10;Newsletter: [link]" aria-describedby="bq-platforms-hint"></textarea>
+            <p class="q-hint" id="bq-platforms-hint">List each platform with its link, for example LinkedIn: linkedin.com/company/yourfirm. Skip any you don't use.</p>
+          </fieldset>
+
+          <div class="questionnaire__actions reveal">
+            <button class="questionnaire__submit" type="submit">Send to LeapSphere</button>
+            <p class="questionnaire__status" role="status" aria-live="polite" hidden></p>
+          </div>
+        </form>
+
+        <div class="questionnaire__done" id="brand-questionnaire-done" tabindex="-1" hidden>
+          <h2>Thank you!</h2>
+          <p>We've received your answers and will be in touch shortly.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="page-end">
+    <footer class="footer">
+      <div class="container footer__inner">
+        <nav class="footer__nav" aria-label="Footer">
+          <ul>
+            <li><a href="../">Home</a></li>
+            <li><a href="../why-us/">Why Us</a></li>
+            <li><a href="../how-we-work/">How We Work</a></li>
+            <li><a href="../about/">About Us</a></li>
+            <li><a href="../faq/">FAQ</a></li>
+          </ul>
+        </nav>
+        <img class="footer__logo" src="../assets/leapsphere-logo.svg" alt="LeapSphere" width="1106" height="185" loading="lazy">
+        <ul class="footer__legal">
+          <li><a href="../privacy/">Privacy</a></li>
+          <li><a href="../privacy/#cookies">Manage Cookies</a></li>
+          <li><a href="../terms/">Terms</a></li>
+        </ul>
+      </div>
+    </footer>
+  </div>
+
+  <script src="../GSAP/dist/gsap.min.js"></script>
+  <script src="../GSAP/dist/ScrollTrigger.min.js"></script>
+  <script src="../vendor/lenis.min.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

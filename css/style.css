@@ -1228,3 +1228,74 @@ h1.page-title {
 
 /* Inner page header without the green glow (Why Us). */
 .hero--no-glow::before { content: none; }
+
+/* ---------- Brand questionnaire (private client page) ---------- */
+.questionnaire__form { display: grid; gap: 15.1px; }
+.q-card {
+  display: grid;
+  gap: 0.65rem;
+  min-width: 0;
+  margin: 0;
+  padding: clamp(19.4px, 2.4vw, 25.9px) clamp(21.6px, 3vw, 36.7px);
+  border: 1.1px solid rgba(var(--moss-rgb), 0.55);
+  border-radius: 25.9px;
+  background: linear-gradient(180deg, rgba(var(--moss-rgb), 0.2), rgba(var(--moss-rgb), 0.1));
+}
+.q-card__title {
+  float: left; /* lets a fieldset legend sit inside the card padding */
+  width: 100%;
+  margin-bottom: 0.35rem;
+  padding: 0;
+  font-size: 1.134rem;
+  font-weight: 500;
+  color: var(--text);
+}
+.q-card__title + * { clear: both; }
+.q-required { margin-left: 0.15em; color: var(--olive); }
+.q-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.9rem; }
+.q-field { display: grid; gap: 0.4rem; min-width: 0; }
+.q-label { font-size: 0.94rem; font-weight: 500; color: var(--text-soft); }
+.q-input {
+  width: 100%;
+  padding: 0.8em 1.2em;
+  border: 1.1px solid transparent;
+  border-radius: var(--radius-pill);
+  background: #fff;
+  font: inherit;
+  color: var(--text);
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.q-textarea { border-radius: 19.4px; resize: vertical; min-height: 6.5em; line-height: 1.5; }
+.q-input::placeholder { color: rgba(var(--forest-rgb), 0.5); }
+.q-input:focus {
+  outline: none;
+  border-color: var(--olive);
+  box-shadow: 0 0 0 3.2px rgba(var(--moss-rgb), 0.35);
+}
+.q-hint { margin: 0; font-size: 0.9rem; color: var(--text-soft); }
+.questionnaire__actions { display: grid; justify-items: center; gap: 0.9rem; margin-top: 1.08rem; }
+.questionnaire__submit {
+  padding: 0.9em 2.4em;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--moss);
+  color: var(--forest);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 8.6px 21.6px rgba(var(--moss-rgb), 0.5);
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), background-color 0.3s;
+}
+.questionnaire__submit:hover {
+  transform: translateY(-1.5px);
+  background: #CDD463;
+  box-shadow: 0 10.8px 30.2px rgba(var(--moss-rgb), 0.6);
+}
+.questionnaire__submit:disabled { opacity: 0.7; cursor: default; transform: none; }
+.questionnaire__submit:focus-visible { outline: 2.2px solid var(--forest); outline-offset: 3.2px; }
+.questionnaire__status { margin: 0; font-size: 0.94rem; color: #A3342F; text-align: center; }
+.questionnaire__done { text-align: center; }
+.questionnaire__done:focus { outline: none; }
+@media (max-width: 760px) {
+  .q-grid { grid-template-columns: 1fr; }
+}

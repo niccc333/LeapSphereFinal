@@ -17,6 +17,7 @@
   initMenu();
   initCtaModal();
   initFooterForms();
+  initQuestionnaire();
   initCarousels();
   placeOptionsLine();
 
@@ -251,14 +252,15 @@
     return loadRecaptcha().then((gre) => gre.execute(RECAPTCHA_SITE_KEY, { action: 'submit' }));
   }
 
-  // Posts a form to Formspree with a fresh reCAPTCHA token.
-  function postToFormspree(form) {
+  // Posts a form to Formspree with a fresh reCAPTCHA token. Defaults to the
+  // shared endpoint; pages with their own Formspree form pass theirs in.
+  function postToFormspree(form, endpoint = FORMSPREE_ENDPOINT) {
     return recaptchaToken()
       .catch(() => null)
       .then((token) => {
         const data = new FormData(form);
         if (token) data.append('g-recaptcha-response', token);
-        return fetch(FORMSPREE_ENDPOINT, {
+        return fetch(endpoint, {
           method: 'POST',
           body: data,
           headers: { Accept: 'application/json' },
@@ -305,6 +307,58 @@
             }, 2500);
           });
       });
+    });
+  }
+
+  // Brand questionnaire page: posts to its own Formspree form (the form's
+  // action attribute) and swaps in a thank-you message on success.
+  function initQuestionnaire() {
+    const form = document.getElementById('brand-questionnaire');
+    if (!form) return;
+    const done = document.getElementById('brand-questionnaire-done');
+    const button = form.querySelector('.questionnaire__submit');
+    const status = form.querySelector('.questionnaire__status');
+    const label = button.textContent;
+    const endpoint = form.getAttribute('action');
+
+    const showStatus = (msg) => {
+      status.textContent = msg;
+      status.hidden = false;
+    };
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (button.disabled) return;
+      status.hidden = true;
+
+      const empty = [...form.querySelectorAll('[required]')].find((el) => !el.value.trim());
+      if (empty) {
+        empty.focus();
+        showStatus('Please fill in the fields marked with *.');
+        return;
+      }
+      if (endpoint.indexOf('your-form-id') !== -1) {
+        console.warn('Set the Formspree form ID in brand-questionnaire/index.html.');
+        showStatus('This form is not connected yet.');
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = 'Sending…';
+      postToFormspree(form, endpoint)
+        .then(() => {
+          form.reset();
+          form.hidden = true;
+          if (done) { done.hidden = false; done.focus(); }
+        })
+        .catch((err) => {
+          console.error('Formspree error:', err);
+          showStatus(err.message || 'Something went wrong. Please try again.');
+        })
+        .finally(() => {
+          button.disabled = false;
+          button.textContent = label;
+        });
     });
   }
 

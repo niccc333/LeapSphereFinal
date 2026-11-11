@@ -44,6 +44,7 @@ export default defineConfig({
         privacy: resolve(__dirname, 'privacy/index.html'),
         terms: resolve(__dirname, 'terms/index.html'),
         fr: resolve(__dirname, 'fr/index.html'),
+        'brand-questionnaire': resolve(__dirname, 'brand-questionnaire/index.html'),
       },
     },
   },
