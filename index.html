@@ -76,31 +76,43 @@
   <main id="main">
     <section class="hero">
       <div class="container hero__inner">
-        <h1 class="hero__title" id="hero-title"><span id="hero-prefix">Intelligence based marketing that</span><br><span id="hero-prefix2">brings you the </span><span class="hero__cycle" id="hero-cycle">right</span> clients</h1>
-        <p class="hero__sub reveal">We do the work of a full marketing department, and help you convert</p>
-        <a class="btn btn--glow reveal" href="#" data-cta-open>Book a Discovery Call</a>
+        <div class="hero__content">
+          <h1 class="hero__title" id="hero-title"><span id="hero-prefix">Intelligence based marketing that</span><br><span id="hero-prefix2">brings you the </span><span class="hero__accent"><span class="hero__cycle" id="hero-cycle">right</span> clients</span></h1>
+          <p class="hero__sub reveal">We do the work of a full marketing department, and help you convert</p>
+          <a class="btn btn--glow reveal" href="#" data-cta-open>Book a Discovery Call</a>
+        </div>
+        <!-- Where the ADAM bubble sits on load. On scroll the bubble stays put
+             while the page moves, then grows into the ADAM loop below. -->
+        <div class="hero__orb" aria-hidden="true"></div>
       </div>
     </section>
 
     <section class="adam" aria-labelledby="adam-title">
       <div class="container adam__inner">
-        <div class="adam__intro reveal">
-          <p class="adam__eyebrow">Introducing</p>
+        <div class="adam__intro">
           <h2 id="adam-title" class="adam__title">ADAM</h2>
         </div>
         <div class="adam__body">
-          <p class="adam__block reveal">ADAM finds the <strong>right kind of traffic:</strong> people with transactional intent that are looking to <strong>buy now</strong>.</p>
+          <p class="adam__block reveal">ADAM finds the people with transactional intent that are looking to <strong>buy now</strong>.</p>
           <p class="adam__block reveal">The system makes the firm visible to <strong>that traffic</strong> (including AI answers).</p>
           <p class="adam__block reveal">Behind that, it runs the whole marketing department in one continuous loop:</p>
-          <ul class="adam__list bullets reveal">
+        </div>
+        <div class="adam__loop">
+          <div class="adam__rings" aria-hidden="true">
+            <span class="adam__ring adam__ring--outer"></span>
+            <span class="adam__ring adam__ring--inner"></span>
+            <span class="adam__core"></span>
+            <span class="adam__track adam__track--sweep"><span class="adam__dot adam__dot--lg"></span></span>
+            <span class="adam__track adam__track--drift"><span class="adam__dot adam__dot--sm"></span></span>
+          </div>
+          <ul class="adam__nodes">
             <li>market research</li>
             <li>content</li>
             <li>site</li>
-            <li>social</li>
+            <li>strategy</li>
             <li>email</li>
             <li>CRM</li>
           </ul>
-          <p class="adam__block reveal"></p>
         </div>
       </div>
     </section>

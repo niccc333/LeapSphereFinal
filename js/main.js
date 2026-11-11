@@ -63,6 +63,7 @@
   });
 
   initOptionsReveal();
+  initAdamOrbit();
   initHeroTyping();
   initLossTyping();
 
@@ -491,6 +492,65 @@
           onUpdate: () => { cycleEl.textContent = next.slice(0, Math.round(state.chars)); },
         });
     }, 4500);
+  }
+
+  // Home: the ADAM loop starts in the hero as a small green bubble (only its
+  // core showing). While the page scrolls from the hero to the ADAM section
+  // it holds still on screen, grows, and the rings and functions fade in.
+  // Once it reaches its own spot in the ADAM section it scrolls normally.
+  function initAdamOrbit() {
+    const slot = document.querySelector('.hero__orb');
+    const loop = document.querySelector('.adam__loop');
+    const intro = document.querySelector('.adam__intro');
+    if (!slot || !loop || !intro) return;
+
+    const HERO_SCALE = 0.65;
+    const pair = [loop, intro];
+    const extras = loop.querySelectorAll('.adam__ring, .adam__track');
+    const nodes = loop.querySelectorAll('.adam__nodes li');
+
+    // Page coordinates of an element's centre, ignoring transforms.
+    const centre = (el) => {
+      let x = el.offsetWidth / 2;
+      let y = el.offsetHeight / 2;
+      for (let n = el; n; n = n.offsetParent) { x += n.offsetLeft; y += n.offsetTop; }
+      return { x, y };
+    };
+    let offset = { x: 0, y: 0 };
+    const measure = () => {
+      const from = centre(slot);
+      const to = centre(loop);
+      offset = { x: from.x - to.x, y: from.y - to.y };
+      return offset;
+    };
+
+    const clamp = gsap.utils.clamp(0, 1);
+    const grow = gsap.parseEase('power2.inOut');
+    // 0..1 progress of a step that starts at `at` and lasts `len`.
+    const step = (p, at, len) => clamp((p - at) / len);
+
+    // p runs 0 -> 1 from the top of the page until the loop reaches its own
+    // place. The move is linear and 1:1 with the scroll, so it cancels the
+    // scroll exactly and the loop holds still on screen.
+    const render = (p) => {
+      gsap.set(pair, {
+        x: offset.x * (1 - p),
+        y: offset.y * (1 - p),
+        scale: HERO_SCALE + (1 - HERO_SCALE) * grow(step(p, 0.25, 0.6)),
+      });
+      gsap.set(extras, { opacity: step(p, 0.5, 0.45) });
+      nodes.forEach((li, i) => gsap.set(li, { opacity: step(p, 0.6 + i * 0.03, 0.25) }));
+      gsap.set(intro, { opacity: step(p, 0.65, 0.3) });
+    };
+
+    ScrollTrigger.create({
+      start: 0,
+      end: () => Math.max(1, -measure().y),
+      onUpdate: (self) => render(self.progress),
+      onRefresh: (self) => render(self.progress),
+    });
+    measure();
+    render(0);
   }
 
   // Types out the loss section title once it scrolls into view.

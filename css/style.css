@@ -8,6 +8,7 @@
   --porcelain-rgb: 246, 246, 238;
   --moss-rgb: 192, 198, 85;
   --forest-rgb: 48, 57, 6;
+  --olive-rgb: 120, 122, 47;
 
   --text: var(--forest);
   --text-soft: rgba(var(--forest-rgb), 0.82);
@@ -570,9 +571,6 @@ em { font-style: italic; font-weight: 500; }
   .process-row { grid-template-columns: 1fr; gap: 12.96px; padding: 25.9px 4.3px; }
   .process-row--featured { padding: 25.9px 21.6px; }
 
-  .adam__inner { grid-template-columns: 1fr; gap: 1.6rem; }
-  .adam__body { max-width: none; }
-
   .footer__inner { grid-template-columns: 1fr; grid-template-areas: "nav" "logo" "legal"; }
   .footer__nav li { text-align: left; }
   .footer__legal { justify-content: space-between; }
@@ -893,26 +891,30 @@ em { font-style: italic; font-weight: 500; }
   --section-gap: calc(max(0px, (100svh - 285px) / 2) + clamp(86.4px, 14vh, 172.8px));
 }
 .adam { text-align: left; }
+/* Text on the left; on the right, the "Introducing ADAM" heading sits in the
+   glowing core of the loop diagram. The heading, the copy and the loop are
+   separate elements (so the heading still comes first in reading order), and
+   the heading and the loop share one grid cell. */
 .adam__inner {
+  --loop: min(100%, 440px);
+  --cycle: 12s;
   display: grid;
-  grid-template-columns: minmax(0, 0.7fr) minmax(0, 2fr);
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  grid-template-areas: "body loop";
   align-items: center;
   gap: clamp(1.5rem, 3vw, 3.24rem);
 }
-.adam__intro { text-align: center; }
-.adam__eyebrow {
-  margin: 0 0 0.2em;
-  color: var(--olive);
-  font-size: clamp(1.08rem, 0.5vw + 0.972rem, 1.4rem);
+.adam__intro {
+  grid-area: loop;
+  justify-self: center;
+  position: relative;
+  z-index: 1;
+  width: calc(var(--loop) * 0.5);
+  text-align: center;
 }
-.adam__title {
-  margin: 0;
-  color: var(--text);
-  font-size: clamp(2.052rem, 1.6vw + 1.4rem, 2.7rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-.adam__body { max-width: 44rem; }
+/* Same size, weight and tracking as the other section subheadings (base h2). */
+.adam__title { margin: 0; }
+.adam__body { grid-area: body; max-width: 44rem; }
 .adam__body > :last-child { margin-bottom: 0; }
 .adam__block {
   margin: 0 0 0.864rem;
@@ -920,10 +922,217 @@ em { font-style: italic; font-weight: 500; }
   border: 0;
   background: none;
 }
-.adam__list { margin: 0 0 0.864rem; }
+
+/* ---------- ADAM loop diagram ---------- */
+.adam__loop {
+  grid-area: loop;
+  justify-self: center;
+  position: relative;
+  width: var(--loop);
+  aspect-ratio: 1;
+}
+/* Faint halo behind the whole diagram. */
+.adam__loop::before {
+  content: "";
+  position: absolute;
+  inset: -10%;
+  border-radius: 50%;
+  background: radial-gradient(circle closest-side,
+    rgba(var(--moss-rgb), 0.14) 0%,
+    rgba(var(--moss-rgb), 0.06) 60%,
+    rgba(var(--moss-rgb), 0) 100%);
+  pointer-events: none;
+}
+.adam__rings,
+.adam__ring,
+.adam__core,
+.adam__track { position: absolute; border-radius: 50%; }
+.adam__rings { inset: 0; }
+.adam__ring--outer { inset: 0; border: 1.1px solid rgba(var(--forest-rgb), 0.1); }
+.adam__ring--inner { inset: 15.5%; border: 1.1px solid rgba(var(--forest-rgb), 0.08); }
+/* The green bubble: pale centre, moss rim, soft glow. Used for the ADAM core
+   and for the static hero bubble shown when motion is off. */
+.adam__core,
+.hero__orb::before {
+  background: radial-gradient(circle closest-side,
+    rgba(var(--moss-rgb), 0.2) 0%,
+    rgba(var(--moss-rgb), 0.28) 45%,
+    rgba(var(--moss-rgb), 0.6) 80%,
+    rgba(var(--moss-rgb), 0.45) 100%);
+  box-shadow: 0 0 43.2px 12px rgba(var(--moss-rgb), 0.3);
+}
+.adam__core {
+  inset: 23%;
+  animation: adam-breathe 6s ease-in-out infinite alternate;
+}
+
+/* Tracks spin on the outer ring. The sweep makes one lap per --cycle and
+   lights up each function as it passes; the small dot drifts more slowly. */
+.adam__track {
+  inset: 0;
+  transform: rotate(var(--start));
+  animation: orbit-spin var(--speed) linear infinite;
+}
+.adam__track--sweep { --start: 0deg; --speed: var(--cycle); }
+.adam__track--drift { --start: 205deg; --speed: 38s; }
+/* Fading tail behind the sweep dot, clipped to the outer ring. */
+.adam__track--sweep::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(rgba(var(--olive-rgb), 0) 0deg 270deg, rgba(var(--olive-rgb), 0.5) 360deg);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 1.6px), #000 calc(100% - 1.1px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 1.6px), #000 calc(100% - 1.1px));
+}
+.adam__dot {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.adam__dot--lg {
+  width: 3.6%;
+  min-width: 9px;
+  aspect-ratio: 1;
+  background: var(--olive);
+  box-shadow: 0 0 0 4.3px rgba(var(--moss-rgb), 0.22);
+}
+.adam__dot--sm {
+  width: 1.6%;
+  min-width: 5px;
+  aspect-ratio: 1;
+  background: var(--moss);
+}
+
+/* The six functions, evenly spaced (every 60deg) on a ring at 40% radius. */
+.adam__nodes {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.adam__nodes li {
+  position: absolute;
+  width: max-content;
+  max-width: 7em;
+  padding: 0.378rem 0.648rem;
+  border: 1.1px solid rgba(var(--moss-rgb), 0.35);
+  border-radius: var(--radius-pill);
+  background: #ECEDD2;
+  color: var(--text);
+  font-size: 0.81rem;
+  line-height: 1.15;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  animation: adam-node var(--cycle) linear infinite;
+  /* Negative delay so pill i is lit exactly when the sweep reaches i * 60deg. */
+  animation-delay: calc(var(--cycle) * (var(--i) - 6) / 6);
+}
+.adam__nodes li:nth-child(1) { --i: 0; left: 50%;     top: 10%; }
+.adam__nodes li:nth-child(2) { --i: 1; left: 84.64%; top: 30%; }
+.adam__nodes li:nth-child(3) { --i: 2; left: 84.64%; top: 70%; }
+.adam__nodes li:nth-child(4) { --i: 3; left: 50%;     top: 90%; }
+.adam__nodes li:nth-child(5) { --i: 4; left: 15.36%; top: 70%; }
+.adam__nodes li:nth-child(6) { --i: 5; left: 15.36%; top: 30%; }
+
+/* 0% is the moment the sweep dot reaches the pill. */
+@keyframes adam-node {
+  0%, 10% {
+    background: rgba(var(--moss-rgb), 0.55);
+    border-color: var(--moss);
+    box-shadow: 0 6.5px 30.2px rgba(var(--moss-rgb), 0.45);
+    scale: 1.06;
+  }
+  28%, 90% {
+    background: #ECEDD2;
+    border-color: rgba(var(--moss-rgb), 0.35);
+    box-shadow: 0 0 0 rgba(var(--moss-rgb), 0);
+    scale: 1;
+  }
+  100% {
+    background: rgba(var(--moss-rgb), 0.55);
+    border-color: var(--moss);
+    box-shadow: 0 6.5px 30.2px rgba(var(--moss-rgb), 0.45);
+    scale: 1.06;
+  }
+}
+@keyframes adam-breathe {
+  from { transform: scale(1); }
+  to   { transform: scale(1.035); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .adam__core,
+  .adam__track,
+  .adam__nodes li { animation: none; }
+  .adam__track--sweep::before { content: none; }
+}
+/* Stacked on small screens: diagram (with the heading) above the copy.
+   Kept after the base .adam rules so it wins the cascade. */
+@media (max-width: 760px) {
+  .adam__inner {
+    --loop: min(82vw, 340px);
+    grid-template-columns: 1fr;
+    grid-template-areas: "loop" "body";
+    gap: 2.4rem;
+  }
+  .adam__body { max-width: none; }
+}
 
 .home .adam {
   padding: clamp(86.4px, 14vh, 172.8px) 0 0;
+}
+
+/* ---------- Home hero: copy on the left, ADAM bubble on the right ----------
+   Uses the same columns, gap and --loop size as .adam__inner so the bubble
+   lines up exactly with the ADAM loop it grows into (see initAdamOrbit). */
+.home .hero::before { content: none; }
+.home .hero__inner {
+  --loop: min(100%, 440px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(1.5rem, 3vw, 3.24rem);
+  text-align: left;
+}
+/* The copy may run past the first column; the bubble is only the centre of
+   the loop area, so there is room before it. */
+.home .hero__content { grid-column: 1 / -1; grid-row: 1; max-width: 66%; }
+.home .hero__title {
+  max-width: none;
+  margin: 0 0 0.6em;
+  font-size: clamp(2.052rem, 2.4vw + 0.6rem, 2.75rem);
+}
+.hero__accent { color: var(--olive); }
+.hero__orb {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+  position: relative;
+  width: var(--loop);
+  aspect-ratio: 1;
+}
+/* Same size as the ADAM core at the hero scale (54% x 0.65). Hidden when JS
+   runs, because then the real ADAM loop is moved up here instead. */
+.hero__orb::before {
+  content: "";
+  position: absolute;
+  inset: 32.45%;
+  border-radius: 50%;
+}
+.js .hero__orb::before { visibility: hidden; }
+@media (max-width: 760px) {
+  .home .hero__inner {
+    --loop: min(82vw, 340px);
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .home .hero__content { grid-column: 1; max-width: none; }
+  /* Shorter box (same centre) so the bubble doesn't leave a big gap. */
+  .hero__orb { grid-column: 1; grid-row: 2; aspect-ratio: auto; height: calc(var(--loop) * 0.5); }
+  .hero__orb::before { inset: auto; top: 50%; left: 50%; width: calc(var(--loop) * 0.351); aspect-ratio: 1; transform: translate(-50%, -50%); }
 }
 .home .loss,
 .home .services,
