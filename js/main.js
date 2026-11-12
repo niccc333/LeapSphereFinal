@@ -1,5 +1,6 @@
 (() => {
   const root = document.documentElement;
+  const isFr = (root.lang || '').toLowerCase().startsWith('fr');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const nav = document.getElementById('nav');
   let lenis = null;
@@ -185,7 +186,9 @@
 
     const setOpen = (open) => {
       btn.setAttribute('aria-expanded', String(open));
-      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      btn.setAttribute('aria-label', open
+        ? (isFr ? 'Fermer le menu' : 'Close menu')
+        : (isFr ? 'Ouvrir le menu' : 'Open menu'));
       if (open) {
         menu.hidden = false;
         requestAnimationFrame(() => {
@@ -273,7 +276,7 @@
           .catch(() => ({}))
           .then((data) => {
             const msg = data && data.errors && data.errors[0] && data.errors[0].message;
-            throw new Error(msg || 'Submission failed. Please try again.');
+            throw new Error(msg || (isFr ? 'L’envoi a échoué. Veuillez réessayer.' : 'Submission failed. Please try again.'));
           });
       });
   }
@@ -291,15 +294,15 @@
           return;
         }
         button.disabled = true;
-        button.textContent = 'Sending\u2026';
+        button.textContent = isFr ? 'Envoi\u2026' : 'Sending\u2026';
         postToFormspree(form)
           .then(() => {
             form.reset();
-            button.textContent = 'Thanks!';
+            button.textContent = isFr ? 'Merci!' : 'Thanks!';
           })
           .catch((err) => {
             console.error('Formspree error:', err);
-            button.textContent = 'Try again';
+            button.textContent = isFr ? 'Réessayer' : 'Try again';
           })
           .finally(() => {
             window.setTimeout(() => {
@@ -335,17 +338,17 @@
       const empty = [...form.querySelectorAll('[required]')].find((el) => !el.value.trim());
       if (empty) {
         empty.focus();
-        showStatus('Please fill in the fields marked with *.');
+        showStatus(isFr ? 'Veuillez remplir les champs marqués d’un *.' : 'Please fill in the fields marked with *.');
         return;
       }
       if (endpoint.indexOf('your-form-id') !== -1) {
         console.warn('Set the Formspree form ID in brand-questionnaire/index.html.');
-        showStatus('This form is not connected yet.');
+        showStatus(isFr ? 'Ce formulaire n’est pas encore connecté.' : 'This form is not connected yet.');
         return;
       }
 
       button.disabled = true;
-      button.textContent = 'Sending…';
+      button.textContent = isFr ? 'Envoi\u2026' : 'Sending…';
       postToFormspree(form, endpoint)
         .then(() => {
           form.reset();
@@ -354,7 +357,7 @@
         })
         .catch((err) => {
           console.error('Formspree error:', err);
-          showStatus(err.message || 'Something went wrong. Please try again.');
+          showStatus(err.message || (isFr ? 'Une erreur est survenue. Veuillez réessayer.' : 'Something went wrong. Please try again.'));
         })
         .finally(() => {
           button.disabled = false;
@@ -376,14 +379,14 @@
     modal.innerHTML = `
       <div class="modal__backdrop" data-modal-close></div>
       <div class="modal__card" role="dialog" aria-modal="true" aria-labelledby="cta-modal-title">
-        <button class="modal__close" type="button" aria-label="Close" data-modal-close>&times;</button>
-        <h2 class="modal__title" id="cta-modal-title">Partner with LeapSphere</h2>
+        <button class="modal__close" type="button" aria-label="${isFr ? 'Fermer' : 'Close'}" data-modal-close>&times;</button>
+        <h2 class="modal__title" id="cta-modal-title">${isFr ? 'Collaborer avec LeapSphere' : 'Partner with LeapSphere'}</h2>
         <div class="modal__body">
           <!-- Endpoint is set via FORMSPREE_ENDPOINT in js/main.js -->
           <form class="modal__form" action="${FORMSPREE_ENDPOINT}" method="POST">
-            <label class="visually-hidden" for="cta-modal-email">Email address</label>
-            <input class="modal__input" id="cta-modal-email" type="email" name="email" placeholder="enter your email" autocomplete="email" required>
-            <button class="modal__submit" type="submit">Submit</button>
+            <label class="visually-hidden" for="cta-modal-email">${isFr ? 'Adresse courriel' : 'Email address'}</label>
+            <input class="modal__input" id="cta-modal-email" type="email" name="email" placeholder="${isFr ? 'entrez votre courriel' : 'enter your email'}" autocomplete="email" required>
+            <button class="modal__submit" type="submit">${isFr ? 'Envoyer' : 'Submit'}</button>
             <p class="modal__status" role="status" aria-live="polite" hidden></p>
           </form>
         </div>
@@ -431,22 +434,22 @@
 
       status.hidden = true;
       status.classList.remove('is-error');
-      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending\u2026'; }
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = isFr ? 'Envoi\u2026' : 'Sending\u2026'; }
 
       postToFormspree(form)
         .then(() => {
           form.reset();
-          status.textContent = 'Thanks, we will be in touch shortly.';
+          status.textContent = isFr ? 'Merci, nous communiquerons avec vous sous peu.' : 'Thanks, we will be in touch shortly.';
           status.hidden = false;
           setTimeout(close, 1200);
         })
         .catch((err) => {
-          status.textContent = err.message || 'Something went wrong. Please try again.';
+          status.textContent = err.message || (isFr ? 'Une erreur est survenue. Veuillez réessayer.' : 'Something went wrong. Please try again.');
           status.classList.add('is-error');
           status.hidden = false;
         })
         .finally(() => {
-          if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Submit'; }
+          if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = isFr ? 'Envoyer' : 'Submit'; }
         });
     });
 
@@ -472,7 +475,9 @@
     const cycleEl = document.getElementById('hero-cycle');
     if (!cycleEl) return;
 
-    const phrases = ['right', 'paying', 'recurring', 'referring'];
+    const phrases = isFr
+      ? ['idéaux', 'convaincus', 'fidèles', 'ambassadeurs']
+      : ['right', 'paying', 'recurring', 'referring'];
     let i = 0;
 
     setInterval(() => {
